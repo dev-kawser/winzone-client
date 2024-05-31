@@ -38,7 +38,7 @@ const Navbar = () => {
 
 
             {/* navbar */}
-            <div className='bg-slate-300'>
+            <div className='shadow-xl'>
                 <div className="navbar container mx-auto py-4">
                     <div className="navbar-start">
                         <div className="dropdown">

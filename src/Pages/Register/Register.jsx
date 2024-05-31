@@ -63,14 +63,14 @@ const Register = () => {
     }
 
     return (
-        <div className="bg-gray-100">
+        <div>
             <div className="container mx-auto">
 
                 <Helmet>
                     <title>Shooter | Register</title>
                 </Helmet>
 
-                <div className="flex h-screen">
+                <div className="flex min-h-screen justify-center items-center">
 
                     <div className="hidden lg:flex items-center justify-center flex-1text-black">
                         <div className="text-center">
