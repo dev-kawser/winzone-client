@@ -9,13 +9,11 @@ import { Helmet } from "react-helmet";
 
 
 const Register = () => {
-    const { registerUser, googleUser, user } = useAuth()
+    const { registerUser, googleUser} = useAuth()
     const [error, setError] = useState("")
     const [showPassword, setShowPassword] = useState(false)
     const navigate = useNavigate();
     const location = useLocation();
-
-    console.log(user);
 
 
     const {
@@ -43,7 +41,7 @@ const Register = () => {
                 toast.success("Successfully register !")
                 navigate(location?.state ? location.state : '/login')
                 updateProfile(result.user, {
-                    userName: userName,
+                    displayName: userName,
                     photoURL: photoUrl,
                     email: email,
                 })
@@ -132,11 +130,11 @@ const Register = () => {
                                     {errors.userName && <small className="text-red-500 font-medium mt-1">This field is required</small>}
                                 </div>
                                 <div>
-                                    <button type="submit" className="w-full bg-black text-white p-2 rounded-md hover:bg-gray-800 focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Register</button>
+                                    <button type="submit" className="w-full bg-[#d32f2f] text-white p-2 rounded-md hover:bg-blue-500 focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Register</button>
                                 </div>
                             </form>
                             <div className="mt-4 text-sm text-gray-600 text-center">
-                                <p>Already have an account? <Link to="/login" className="text-black hover:underline">Login here</Link>
+                                <p>Already have an account? <Link to="/login" className="text-blue-500 font-semibold hover:underline">Login here</Link>
                                 </p>
                             </div>
                         </div>

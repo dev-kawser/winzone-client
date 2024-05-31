@@ -1,7 +1,11 @@
 
 import { Link, NavLink } from 'react-router-dom';
+import useAuth from '../../Hooks/useAuth';
 
 const Navbar = () => {
+
+    const {user} = useAuth()
+    console.log(user);
 
     const links = <>
         <li className="group flex  cursor-pointer flex-col">
@@ -25,7 +29,7 @@ const Navbar = () => {
 
 
             {/* navbar top */}
-            <div className='bg-[#d32f2f] text-white py-3'>
+            <div className='bg-[#d32f2f] text-white py-3 lg:flex hidden'>
                 <div className='container mx-auto flex justify-between'>
                     <div>
                         <h1>Hello I am Safi</h1>
@@ -52,8 +56,8 @@ const Navbar = () => {
                             </ul>
                         </div>
                         <div className='flex gap-2 items-center justify-center'>
-                            <img className='size-10' src="https://i.ibb.co/Zzmqtbf/png-transparent-digital-camera-illustration-logo-camera-lens-graphy-creative-camera-lens-camera-icon.png" alt="" />
-                            <Link to='/' className="font-bold text-[27px] text-[#d32f2f]">SHOOTER</Link>
+                            <img className='lg:size-10 size-5' src="https://i.ibb.co/Zzmqtbf/png-transparent-digital-camera-illustration-logo-camera-lens-graphy-creative-camera-lens-camera-icon.png" alt="" />
+                            <Link to='/' className="font-bold text-lg lg:text-[27px] text-[#d32f2f]">SHOOTER</Link>
                         </div>
                     </div>
                     <div className="navbar-center hidden lg:flex">
@@ -66,7 +70,7 @@ const Navbar = () => {
                     <div className="navbar-end">
                         <Link to="/login">
 
-                            <button className="rounded-md border border-[#d32f2f] px-5 py-2 text-xl text-white duration-200 bg-[#d32f2f] hover:bg-white  hover:text-[#d32f2f]">Login</button>
+                            <button className="lg:rounded-md border border-[#d32f2f] lg:px-5 lg:py-2 lg:text-xl text-lg px-2 text-white duration-200 bg-[#d32f2f] hover:bg-white  hover:text-[#d32f2f]">Login</button>
 
                         </Link>
                     </div>

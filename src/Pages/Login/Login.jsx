@@ -75,9 +75,9 @@ const Login = () => {
                             <input type="password" id="password" name="password" className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500" {...register("password", { required: true })} />
                             {errors.password && <small className="text-red-500 font-medium mt-1">This field is required</small>}
                         </div>
-                        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full">Login</button>
+                        <button type="submit" className="bg-blue-500 hover:bg-[#d32f2f] text-white font-semibold rounded-md py-2 px-4 w-full">Login</button>
                     </form>
-                    <div className="my-6 text-blue-500 text-center">
+                    <div className="my-6 text-[#d32f2f] font-semibold text-center">
                         <Link to='/register' className="hover:underline">Sign up Here</Link>
                     </div>
                     <hr />
