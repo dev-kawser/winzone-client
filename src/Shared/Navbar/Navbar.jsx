@@ -106,28 +106,28 @@ const Navbar = () => {
                             }
                         </ul>
                     </div>
-                    <div className="navbar-end ubuntu">
+                    <div className="navbar-end">
                         {
                             user ?
                                 <div ref={dropDownRef} className="relative mx-2 w-fit text-black">
                                     <button onClick={() => setOpen((prev) => !prev)}>
-                                        <img width={40} height={40} className="size-12 border-2 border-[#d32f2f] rounded-full bg-slate-500 object-cover duration-500 hover:scale-x-[98%] hover:opacity-80" src={user?.photoURL} alt="avatar drop down navigate ui" />
+                                        <img width={40} height={40} className="lg:size-12 size-10 border-2 border-[#d32f2f] rounded-full bg-slate-500 object-cover duration-500 hover:scale-x-[98%] hover:opacity-80" src={user?.photoURL} alt="avatar drop down navigate ui" />
                                     </button>
                                     <ul className={`${open ? 'visible duration-300' : 'invisible'} absolute right-0 top-12 z-50 w-fit rounded-sm bg-slate-200 shadow-md`}>
-                                        <li className='hover:bg-slate-400 bg-slate-300 rounded-sm px-6 py-2'>
+                                        <li className='hover:bg-slate-400 inter bg-slate-300 rounded-sm px-6 py-2'>
                                             {user.displayName}
                                         </li>
-                                        <li className='hover:bg-slate-300 rounded-sm px-6 py-2'>
+                                        <li className='hover:bg-slate-300 inter rounded-sm px-6 py-2'>
                                             <Link>Dashboard</Link>
                                         </li>
-                                        <li className='text-red-500 hover:bg-red-600 hover:text-white rounded-sm px-6 py-2 cursor-pointer font-semibold' onClick={logOut} >LogOut</li>
+                                        <li className='text-red-500 inter hover:bg-red-600 hover:text-white rounded-sm px-6 py-2 cursor-pointer font-semibold' onClick={logOut} >LogOut</li>
                                     </ul>
                                 </div>
 
                                 :
                                 <Link to="/login">
 
-                                    <button className="lg:rounded-md border border-[#d32f2f] lg:px-5 lg:py-2 lg:text-xl text-lg px-2 text-white duration-200 bg-[#d32f2f] hover:bg-white  hover:text-[#d32f2f]">Login</button>
+                                    <button className="lg:rounded-md ubuntu border border-[#d32f2f] lg:px-5 lg:py-2 lg:text-xl text-lg px-2 text-white duration-200 bg-[#d32f2f] hover:bg-white  hover:text-[#d32f2f]">Login</button>
 
                                 </Link>
                         }
