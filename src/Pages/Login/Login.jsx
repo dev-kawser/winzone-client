@@ -37,7 +37,7 @@ const Login = () => {
                 axiosPublic.post("/users", userInfo)
                     .then(res => {
 
-                        if (res.data.insertedId) {
+                        if (res.data.insertedId || res.data.insertedId == null) {
                             toast.success("Successfully Google Login !")
                             navigate(location?.state ? location.state : "/")
                         }

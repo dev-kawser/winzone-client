@@ -1,15 +1,18 @@
 import { BiSolidBookContent } from "react-icons/bi";
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaUserAlt } from "react-icons/fa";
 import { FaUser } from "react-icons/fa6";
 import { IoMdAdd } from "react-icons/io";
 import { MdPadding, MdPostAdd } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../Hooks/useAdmin";
+import useContestCreator from "../Hooks/useContestCreator ";
+import { GiTargetPrize } from "react-icons/gi";
 
 const Dashboard = () => {
 
 
     const { isAdmin } = useAdmin()
+    const { isCreator } = useContestCreator()
 
 
     return (
@@ -24,8 +27,9 @@ const Dashboard = () => {
                     <div className="drawer-side">
                         <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
                         <ul className="menu inter space-y-2 p-4 w-64 min-h-full bg-[#6A64F1] text-white">
-                            {
-                                isAdmin ? <>
+
+                            {isAdmin && (
+                                <>
                                     <NavLink to="/dashboard/manage-users" className="flex items-center gap-2 py-2 px-4 hover:bg-[#553c9a] rounded-md">
 
                                         <span className="flex gap-1 items-center"> <FaUser /> Manage User</span>
@@ -35,31 +39,57 @@ const Dashboard = () => {
                                         <span className="flex gap-1 items-center"> <MdPostAdd /> Manage Contests</span>
                                     </NavLink>
                                 </>
-                                    :
-                                    <>
-                                        <li>
-                                            <NavLink to="/dashboard/add-contest" className="flex items-center gap-2 py-2 px-4 hover:bg-[#553c9a] rounded-md">
+                            )}
 
-                                                <span className="flex gap-1 items-center"> <IoMdAdd /> Add Contest</span>
-                                            </NavLink>
-                                        </li>
-                                        <li>
-                                            <NavLink to="/dashboard/my-created-contest" className="flex items-center gap-2 py-2 px-4 hover:bg-[#553c9a] rounded-md">
+                            {isCreator && (
+                                <>
+                                    <li>
+                                        <NavLink to="/dashboard/add-contest" className="flex items-center gap-2 py-2 px-4 hover:bg-[#553c9a] rounded-md">
 
-                                                <span className="flex gap-1 items-center"> <MdPadding /> My Created Contest</span>
-                                            </NavLink>
-                                        </li>
-                                        <li>
-                                            <NavLink to="/dashboard/contest-submitted-page" className="flex items-center gap-2 py-2 px-4 hover:bg-[#553c9a] rounded-md">
+                                            <span className="flex gap-1 items-center"> <IoMdAdd /> Add Contest</span>
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="/dashboard/my-created-contest" className="flex items-center gap-2 py-2 px-4 hover:bg-[#553c9a] rounded-md">
 
-                                                <span className="flex gap-1 items-center"> <MdPostAdd /> Contest Submitted Page</span>
-                                            </NavLink>
-                                        </li>
-                                    </>
-                            }
+                                            <span className="flex gap-1 items-center"> <MdPadding /> My Created Contest</span>
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="/dashboard/contest-submitted-page" className="flex items-center gap-2 py-2 px-4 hover:bg-[#553c9a] rounded-md">
 
+                                            <span className="flex gap-1 items-center"> <MdPostAdd /> Contest Submitted Page</span>
+                                        </NavLink>
+                                    </li>
+                                </>
+                            )}
+                            {!isAdmin && !isCreator && (
+                                <>
+                                    <li>
+                                        <NavLink to="/dashboard/contest-submitted-page" className="flex items-center gap-2 py-2 px-4 hover:bg-[#553c9a] rounded-md">
+
+                                            <span className="flex gap-1 items-center"> <MdPostAdd />My Participated Contest</span>
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="/dashboard/contest-submitted-page" className="flex items-center gap-2 py-2 px-4 hover:bg-[#553c9a] rounded-md">
+
+                                            <span className="flex gap-1 items-center"> <GiTargetPrize />My Winning Contest Page</span>
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="/dashboard/contest-submitted-page" className="flex items-center gap-2 py-2 px-4 hover:bg-[#553c9a] rounded-md">
+
+                                            <span className="flex gap-1 items-center"> <FaUserAlt />My Profile</span>
+                                        </NavLink>
+                                    </li>
+                                </>
+                            )}
                             {/* For all role */}
                             <div className="divider divider-error" />
+
+
+                            {/* ----------- */}
                             <li>
                                 <NavLink to="/" className="flex items-center gap-2 py-2 px-4 hover:bg-[#553c9a] rounded-md">
 
