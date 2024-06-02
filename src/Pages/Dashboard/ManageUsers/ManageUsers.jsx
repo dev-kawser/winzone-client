@@ -87,7 +87,8 @@ const ManageUsers = () => {
                                     <th></th>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Role</th>
+                                    <th>Role Management</th>
+                                    <th>Actions</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -110,13 +111,17 @@ const ManageUsers = () => {
                                                 </select>
                                             </td>
                                             <td>
-                                                <div className="flex items-center space-x-2">
+                                                <div>
                                                     <button
                                                         onClick={() => handleDelete(user._id)}
                                                         className="btn btn-ghost text-lg bg-red-600 text-white">
                                                         <MdDelete />
                                                     </button>
-                                                    <button
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                <button
                                                         onClick={() => handleBlockUnblock(user._id, user.name, user.isBlocked)}
                                                         className={`btn btn-ghost text-lg ${user.isBlocked ? "bg-yellow-600" : "bg-gray-600"} text-white`}
                                                     >

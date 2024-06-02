@@ -4,10 +4,12 @@ import { FaUser } from "react-icons/fa6";
 import { IoMdAdd } from "react-icons/io";
 import { MdPadding, MdPostAdd } from "react-icons/md";
 import { NavLink, Outlet } from "react-router-dom";
+import useAdmin from "../Hooks/useAdmin";
 
 const Dashboard = () => {
 
-    const isAdmin = true;
+
+    const { isAdmin } = useAdmin()
 
 
     return (
