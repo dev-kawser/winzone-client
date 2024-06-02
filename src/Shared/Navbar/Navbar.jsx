@@ -95,8 +95,8 @@ const Navbar = () => {
                             </ul>
                         </div>
                         <div className='flex gap-2 items-center justify-center'>
-                            <img className='lg:size-10 size-5' src="https://i.ibb.co/Zzmqtbf/png-transparent-digital-camera-illustration-logo-camera-lens-graphy-creative-camera-lens-camera-icon.png" alt="" />
-                            <Link to='/' className="font-bold ubuntu text-lg lg:text-[27px] text-[#d32f2f]">SHOOTER</Link>
+                            <img className='lg:size-12 size-5 rounded-full p-1 border-2 border-[#d32f2f]' src="https://i.ibb.co/7XhJX5x/w-removebg-preview.png" alt="" />
+                            <Link to='/' className="font-bold ubuntu text-lg lg:text-[27px] text-[#d32f2f]">WinZone</Link>
                         </div>
                     </div>
                     <div className="navbar-center hidden lg:flex">
@@ -118,7 +118,7 @@ const Navbar = () => {
                                             {user.displayName}
                                         </li>
                                         <li className='hover:bg-slate-300 inter rounded-sm px-6 py-2'>
-                                            <Link>Dashboard</Link>
+                                            <Link to='/dashboard/welcome'>Dashboard</Link>
                                         </li>
                                         <li className='text-red-500 inter hover:bg-red-600 hover:text-white rounded-sm px-6 py-2 cursor-pointer font-semibold' onClick={logOut} >LogOut</li>
                                     </ul>

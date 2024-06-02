@@ -55,7 +55,7 @@ const Login = () => {
         <div>
 
             <Helmet>
-                <title>Shooter | Login</title>
+                <title>WinZone | Login</title>
             </Helmet>
 
             <div className="flex justify-center items-center">

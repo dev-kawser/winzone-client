@@ -6,14 +6,18 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import useAuth from "../../Hooks/useAuth";
 import { updateProfile } from "firebase/auth";
 import { Helmet } from "react-helmet";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+
 
 
 const Register = () => {
-    const { registerUser, googleUser} = useAuth()
+    const { registerUser, googleUser } = useAuth()
     const [error, setError] = useState("")
     const [showPassword, setShowPassword] = useState(false)
     const navigate = useNavigate();
     const location = useLocation();
+
+    const axiosPublic = useAxiosPublic()
 
 
     const {
@@ -29,6 +33,14 @@ const Register = () => {
         const userName = data.userName
         const photoUrl = data.photoUrl
 
+        const userInfo = {
+
+            email: email,
+            name: userName,
+            photo: photoUrl
+
+        }
+
         const regex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
 
         if (!regex.test(data.password)) {
@@ -38,14 +50,19 @@ const Register = () => {
 
         registerUser(email, password)
             .then((result) => {
-                toast.success("Successfully register !")
-                navigate(location?.state ? location.state : '/login')
                 updateProfile(result.user, {
                     displayName: userName,
                     photoURL: photoUrl,
-                    email: email,
                 })
-                    .then()
+                    .then(() => {
+                        axiosPublic.post("/users", userInfo)
+                            .then(res => {
+                                if (res.data.insertedId) {
+                                    toast.success("Successfully register !")
+                                    // navigate(location?.state ? location.state : '/login')
+                                }
+                            })
+                    })
                     .catch()
             })
             .catch()
@@ -65,14 +82,14 @@ const Register = () => {
             <div className="container mx-auto">
 
                 <Helmet>
-                    <title>Shooter | Register</title>
+                    <title>WinZone | Register</title>
                 </Helmet>
 
                 <div className="flex min-h-screen justify-center items-center">
 
                     <div className="hidden lg:flex items-center justify-center flex-1text-black">
                         <div className="text-center">
-                            <img src="https://i.ibb.co/09N3dgc/erik-mclean-2-Wv9-Vnwzee-I-unsplash.jpg" alt="" className="object-cover size-[600px]" />
+                            <img src="https://i.ibb.co/Fmr2bV3/markus-spiske-uqea-ZXZkquw-unsplash.jpg" alt="" className="object-cover size-[600px]" />
                         </div>
                     </div>
 

@@ -7,12 +7,15 @@ const Footer = () => {
         <div className="mt-10">
 
             <footer className="flex flex-col text-black border-t-2 border-[#d32f2f]">
-                <div className="flex flex-col items-center justify-around gap-5 bg-sky-50 py-8 md:flex-row md:gap-0">
+                <div className="flex flex-col items-center justify-around gap-5 bg-sky-50 py-4 lg:py-8 md:flex-row md:gap-0">
                     <aside className="flex items-center justify-center gap-3 text-xl">
-                        <img className='lg:size-10 size-5' src="https://i.ibb.co/Zzmqtbf/png-transparent-digital-camera-illustration-logo-camera-lens-graphy-creative-camera-lens-camera-icon.png" alt="" />
-                        <Link to='/' className="font-bold ubuntu text-lg lg:text-[27px] text-[#d32f2f]">SHOOTER</Link>
+                        <img className='lg:size-12 size-5 rounded-full' src="https://i.ibb.co/7XhJX5x/w-removebg-preview.png" alt="" />
+                        <Link to='/' className="font-bold ubuntu text-lg lg:text-[27px] text-[#d32f2f]">WinZone</Link>
                     </aside>
-                    <nav className="text-lg">
+                    <div className="divider-info">
+
+                    </div>
+                    <nav className="lg:text-lg text-sm border-l-2 border-black">
                         <ul className=" flex h-full items-center justify-center gap-5">
                             <a href="https://www.facebook.com/kawserferdoussafi.03" className=" text-2xl">
                                 <FaFacebookF />
@@ -26,7 +29,7 @@ const Footer = () => {
                     </nav>
                 </div>
                 <aside className="bg-sky-100 py-5 text-center text-sm inter">
-                    <p>&copy; 2024 SHOOTER. All Rights Reserved.</p>
+                    <p>&copy; 2024 WinZone. All Rights Reserved.</p>
                 </aside>
             </footer>
 
