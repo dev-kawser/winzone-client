@@ -7,6 +7,7 @@ import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Dashboard from "../Layouts/Dashboard";
 import AddContest from "../Pages/Dashboard/AddContest/AddContest";
 import Welcome from "../Pages/Dashboard/Welcome/Welcome";
+import ManageUsers from "../Pages/Dashboard/ManageUsers/ManageUsers";
 
 
 const router = createBrowserRouter([
@@ -33,10 +34,20 @@ const router = createBrowserRouter([
         path: "dashboard",
         element: <Dashboard></Dashboard>,
         children: [
+
+            // For all
             {
                 path: "welcome",
                 element: <Welcome></Welcome>
             },
+
+            // For Admin
+            {
+                path: "manage-users",
+                element: <ManageUsers></ManageUsers>
+            },
+
+            // for Creator
             {
                 path: "add-contest",
                 element: <AddContest></AddContest>
