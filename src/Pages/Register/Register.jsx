@@ -59,7 +59,7 @@ const Register = () => {
                             .then(res => {
                                 if (res.data.insertedId) {
                                     toast.success("Successfully register !")
-                                    // navigate(location?.state ? location.state : '/login')
+                                    navigate(location?.state ? location.state : '/login')
                                 }
                             })
                     })

@@ -6,7 +6,7 @@ const Welcome = () => {
     const { user } = useAuth();
 
     return (
-        <div>
+        <div className="ml-2">
             <h1 className="text-3xl inter">
                 Hello, Welcome back <br />
                 <span className="text-[#d32f2f] ubuntu text-6xl font-medium">
