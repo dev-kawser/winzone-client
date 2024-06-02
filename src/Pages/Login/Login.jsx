@@ -4,12 +4,16 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Helmet } from "react-helmet";
 import useAuth from "../../Hooks/useAuth";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 
 const Login = () => {
 
     const location = useLocation()
     const navigate = useNavigate()
+
+    const axiosPublic = useAxiosPublic()
+
 
     const { loginUser, googleUser, user } = useAuth()
 
@@ -22,9 +26,23 @@ const Login = () => {
 
     const handleGoogleLogin = () => {
         googleUser()
-            .then(() => {
-                toast.success("Successfully Google Login !")
-                navigate(location?.state ? location.state : "/")
+            .then((result) => {
+
+                const userInfo = {
+                    email: result.user?.email,
+                    name: result.user?.displayName,
+                    photo: result.user?.photoURL
+                }
+
+                axiosPublic.post("/users", userInfo)
+                    .then(res => {
+
+                        if (res.data.insertedId) {
+                            toast.success("Successfully Google Login !")
+                            navigate(location?.state ? location.state : "/")
+                        }
+                    })
+
             })
     }
 

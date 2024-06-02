@@ -71,9 +71,25 @@ const Register = () => {
     const handleGoogleRegister = () => {
 
         googleUser()
-            .then(() => {
-                toast.success("Successfully google register !")
-                navigate(location?.state ? location.state : '/login')
+            .then((result) => {
+
+                console.log(result.user);
+
+                const userInfo = {
+                    email: result.user?.email,
+                    name: result.user?.displayName,
+                    photo: result.user?.photoURL
+                }
+
+                axiosPublic.post("/users", userInfo)
+                    .then(res => {
+                        console.log(res.data);
+                        if (res.data.insertedId) {
+                            toast.success("Successfully google register !")
+                            navigate(location?.state ? location.state : '/login')
+                        }
+                    })
+
             })
     }
 

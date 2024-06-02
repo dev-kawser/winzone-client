@@ -7,9 +7,9 @@ const Welcome = () => {
 
     return (
         <div className="ml-2">
-            <h1 className="text-3xl inter">
+            <h1 className="text-2xl inter">
                 Hello, Welcome back <br />
-                <span className="text-[#d32f2f] ubuntu text-6xl font-medium">
+                <span className="text-[#d32f2f] ubuntu text-6xl lg:text-7xl font-medium">
                     {user?.displayName}
                 </span>
             </h1>

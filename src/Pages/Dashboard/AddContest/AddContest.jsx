@@ -42,8 +42,8 @@ const AddContest = () => {
 
     return (
         <div>
-            <div className="w-full bg-[#d32f2f] py-4">
-                <h1 className="text-center text-white text-lg font-semibold">Add Contest Here</h1>
+            <div className="w-full bg-[#d32f2f] lg:py-8 py-4">
+                <h1 className="text-center ubuntu text-white text-lg lg:text-2xl font-bold">Add Contest Here</h1>
             </div>
             <div>
                 <div className="flex items-center justify-center p-12">
