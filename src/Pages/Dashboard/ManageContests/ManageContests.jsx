@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { FaCommentAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import { GiConfirmed } from "react-icons/gi";
 
 const ManageContests = () => {
     const axiosSecure = useAxiosSecure();
@@ -44,18 +45,15 @@ const ManageContests = () => {
         });
     };
 
-    // showing modal and get id value
     const handleComment = (id) => {
         setCurrentContestId(id);
         document.getElementById('comment_modal').showModal();
     };
 
-    
-    // comment submit work
     const handleSubmitComment = () => {
         axiosSecure.patch(`/contests/${currentContestId}`, { comment })
             .then(res => {
-                if (res.data.message) {
+                if (res.data.modifiedCount > 0) {
                     Swal.fire({
                         position: "center",
                         icon: "success",
@@ -68,11 +66,31 @@ const ManageContests = () => {
                     refetch();
                 }
             })
+            .catch(error => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                });
+                console.error(error);
+            });
     };
 
-    const handleConfirm = id => {
-        console.log(id);
-    }
+    const handleConfirm = (id) => {
+        axiosSecure.patch(`/contests/${id}/status`, { status: "confirmed" })
+            .then(res => {
+                if (res.data.modifiedCount > 0) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Status updated successfully",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    refetch();
+                }
+            })
+    };
 
     return (
         <div>
@@ -103,8 +121,15 @@ const ManageContests = () => {
                                             <div>
                                                 <button
                                                     onClick={() => handleConfirm(contest._id)}
-                                                    className="btn btn-ghost text-lg bg-orange-600 text-white">
-                                                    <MdPendingActions />
+                                                    className="btn btn-ghost text-lg bg-orange-400 text-white">
+                                                        {
+                                                           contest.status == "pending" &&  <MdPendingActions />
+                                                        }
+                                                        {
+                                                           contest.status == "confirmed" &&  <GiConfirmed />
+                                                        }
+                                                        
+                                                    
                                                 </button>
                                             </div>
                                         </td>
