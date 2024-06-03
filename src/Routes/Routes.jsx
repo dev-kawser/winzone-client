@@ -13,6 +13,8 @@ import MyCreatedContest from "../Pages/Dashboard/MyCreatedContest/MyCreatedConte
 import ContestSubmittedPage from "../Pages/Dashboard/ContestSubmittedPage/ContestSubmittedPage";
 import ContestUpdate from "../Pages/Dashboard/ContestUpdate/ContestUpdate";
 import AllContests from "../Pages/AllContests/AllContests";
+import ContestDetails from "../Pages/ContestDetails/ContestDetails";
+import ContestPayment from "../Pages/ContestPayment/ContestPayment";
 
 
 const router = createBrowserRouter([
@@ -36,6 +38,16 @@ const router = createBrowserRouter([
             {
                 path: '/all-contests',
                 element: <AllContests></AllContests>
+            },
+            {
+                path: "/contest-details/:id",
+                element: <ContestDetails></ContestDetails>,
+                loader: ({ params }) => fetch(`http://localhost:5000/contests/${params.id}`)
+            },
+            {
+                path: "/contest-payment/:id",
+                element: <ContestPayment></ContestPayment>,
+                loader: ({ params }) => fetch(`http://localhost:5000/contests/${params.id}`)
             },
         ]
     },

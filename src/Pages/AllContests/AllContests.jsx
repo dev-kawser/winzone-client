@@ -70,7 +70,7 @@ const AllContests = () => {
                                 : contest.contestDescription}
                         </p>
                         <p className="text-gray-500 mt-2">Participants: {contest.participantsCount}</p>
-                        <Link to={`/dashboard/contest-details/${contest._id}`}>
+                        <Link to={`/contest-details/${contest._id}`}>
                             <button className="btn btn-ghost mt-3 bg-[#d32f2f] text-white">Details</button>
                         </Link>
                     </div>
