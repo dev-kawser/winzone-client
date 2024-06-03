@@ -74,14 +74,23 @@ const MyCreatedContest = () => {
                                     <td className={`${contest.status === "confirmed" ? "text-green-500 font-semibold" : ""}`}>
                                         {contest.status}
                                     </td>
-                                    <td>
-                                        <Link to={`/dashboard/contest-update/${contest._id}`}>
+                                    <td>{
+                                        contest.status === "confirmed" ?
                                             <button
                                                 className="btn btn-ghost text-lg bg-green-600 text-white"
-                                                disabled={contest.status === "confirmed"}>
+                                                disabled>
                                                 <FaEdit />
                                             </button>
-                                        </Link>
+                                            :
+                                            <Link to={`/dashboard/contest-update/${contest._id}`}>
+                                                <button
+                                                    className="btn btn-ghost text-lg bg-green-600 text-white"
+                                                    disabled={contest.status === "confirmed"}>
+                                                    <FaEdit />
+                                                </button>
+                                            </Link>
+                                    }
+
                                     </td>
                                     <td>
                                         <button
