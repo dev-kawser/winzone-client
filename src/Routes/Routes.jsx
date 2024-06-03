@@ -12,6 +12,7 @@ import ManageContests from "../Pages/Dashboard/ManageContests/ManageContests";
 import MyCreatedContest from "../Pages/Dashboard/MyCreatedContest/MyCreatedContest";
 import ContestSubmittedPage from "../Pages/Dashboard/ContestSubmittedPage/ContestSubmittedPage";
 import ContestUpdate from "../Pages/Dashboard/ContestUpdate/ContestUpdate";
+import AllContests from "../Pages/AllContests/AllContests";
 
 
 const router = createBrowserRouter([
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
             {
                 path: '/register',
                 element: <Register></Register>
+            },
+            {
+                path: '/all-contests',
+                element: <AllContests></AllContests>
             },
         ]
     },

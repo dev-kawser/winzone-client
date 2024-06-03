@@ -21,15 +21,16 @@ const AddContest = () => {
 
     const onSubmit = data => {
 
-        const email = user.email
-        const status = "pending"
-        const contestName = data.contestName
-        const contestPrice = data.contestPrice
-        const contestImage = data.contestImage
-        const contestTask = data.contestTask
-        const contestType = data.contestType
-        const contestDescription = data.contestDescription
+        const email = user.email;
+        const status = "pending";
+        const contestName = data.contestName;
+        const contestPrice = data.contestPrice;
+        const contestImage = data.contestImage;
+        const contestTask = data.contestTask;
+        const contestType = data.contestType;
+        const contestDescription = data.contestDescription;
         const contestDeadline = startDate.toISOString().split('T')[0];
+        const participantsCount = 0;
 
         const contestInfo = {
 
@@ -42,6 +43,7 @@ const AddContest = () => {
             contestType: contestType,
             contestDescription: contestDescription,
             contestDeadline: contestDeadline,
+            participantsCount: participantsCount
 
         }
 
