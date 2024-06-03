@@ -2,18 +2,27 @@ import { useState } from "react";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from "react-hook-form";
+import useAuth from "../../../Hooks/useAuth";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const AddContest = () => {
     const [startDate, setStartDate] = useState(new Date());
 
+    const { user } = useAuth();
+    const axiosSecure = useAxiosSecure()
+
     const {
         register,
         handleSubmit,
+        reset,
     } = useForm()
 
 
     const onSubmit = data => {
 
+        const email = user.email
+        const status = "pending"
         const contestName = data.contestName
         const contestPrice = data.contestPrice
         const contestImage = data.contestImage
@@ -24,6 +33,8 @@ const AddContest = () => {
 
         const contestInfo = {
 
+            email: email,
+            status: status,
             contestName: contestName,
             contestPrice: contestPrice,
             contestImage: contestImage,
@@ -35,6 +46,20 @@ const AddContest = () => {
         }
 
         console.log(contestInfo);
+
+        axiosSecure.post("/contests", contestInfo)
+            .then(res => {
+                if (res.data.insertedId) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: `Contest has been added`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    reset()
+                }
+            })
 
 
     }
