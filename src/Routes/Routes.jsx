@@ -11,6 +11,7 @@ import ManageUsers from "../Pages/Dashboard/ManageUsers/ManageUsers";
 import ManageContests from "../Pages/Dashboard/ManageContests/ManageContests";
 import MyCreatedContest from "../Pages/Dashboard/MyCreatedContest/MyCreatedContest";
 import ContestSubmittedPage from "../Pages/Dashboard/ContestSubmittedPage/ContestSubmittedPage";
+import ContestUpdate from "../Pages/Dashboard/ContestUpdate/ContestUpdate";
 
 
 const router = createBrowserRouter([
@@ -64,6 +65,11 @@ const router = createBrowserRouter([
             {
                 path: "my-created-contest",
                 element: <MyCreatedContest></MyCreatedContest>
+            },
+            {
+                path: "contest-update/:id",
+                element: <ContestUpdate></ContestUpdate>,
+                loader: ({ params }) => fetch(`http://localhost:5000/contests/${params.id}`)
             },
             {
                 path: "contest-submitted-page",

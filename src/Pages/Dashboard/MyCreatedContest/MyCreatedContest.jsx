@@ -13,7 +13,7 @@ const MyCreatedContest = () => {
     const { refetch, data: contests = [] } = useQuery({
         queryKey: ["contests", user?.email],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/contests/${user?.email}`);
+            const res = await axiosSecure.get(`/contests/email/${user?.email}`);
             return res.data;
         }
     });
@@ -75,11 +75,13 @@ const MyCreatedContest = () => {
                                         {contest.status}
                                     </td>
                                     <td>
-                                        <button
-                                            className="btn btn-ghost text-lg bg-green-600 text-white"
-                                            disabled={contest.status === "confirmed"}>
-                                            <FaEdit />
-                                        </button>
+                                        <Link to={`/dashboard/contest-update/${contest._id}`}>
+                                            <button
+                                                className="btn btn-ghost text-lg bg-green-600 text-white"
+                                                disabled={contest.status === "confirmed"}>
+                                                <FaEdit />
+                                            </button>
+                                        </Link>
                                     </td>
                                     <td>
                                         <button
