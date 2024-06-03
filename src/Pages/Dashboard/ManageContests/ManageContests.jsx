@@ -3,11 +3,12 @@ import { MdDelete, MdPendingActions } from "react-icons/md";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { FaCommentAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
-
+import { useState } from "react";
 
 const ManageContests = () => {
-
     const axiosSecure = useAxiosSecure();
+    const [currentContestId, setCurrentContestId] = useState(null);
+    const [comment, setComment] = useState("");
 
     const { refetch, data: contests = [] } = useQuery({
         queryKey: ["contests"],
@@ -17,8 +18,7 @@ const ManageContests = () => {
         }
     });
 
-    // contest delete
-    const handleDelete = id => {
+    const handleDelete = (id) => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -34,7 +34,7 @@ const ManageContests = () => {
                         if (res.data.deletedCount > 0) {
                             Swal.fire({
                                 title: "Deleted!",
-                                text: "User has been deleted.",
+                                text: "Contest deleted Successfully",
                                 icon: "success"
                             });
                             refetch();
@@ -44,6 +44,35 @@ const ManageContests = () => {
         });
     };
 
+    // showing modal and get id value
+    const handleComment = (id) => {
+        setCurrentContestId(id);
+        document.getElementById('comment_modal').showModal();
+    };
+
+    
+    // comment submit work
+    const handleSubmitComment = () => {
+        axiosSecure.patch(`/contests/${currentContestId}`, { comment })
+            .then(res => {
+                if (res.data.message) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Comment added successfully",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    setComment("");
+                    document.getElementById('comment_modal').close();
+                    refetch();
+                }
+            })
+    };
+
+    const handleConfirm = id => {
+        console.log(id);
+    }
 
     return (
         <div>
@@ -57,55 +86,70 @@ const ManageContests = () => {
                             <thead>
                                 <tr>
                                     <th>Contest Name</th>
-                                    <th>Contest type</th>
-                                    <th>Contest task</th>
+                                    <th>Contest Type</th>
+                                    <th>Contest Task</th>
                                     <th>Status</th>
                                     <th>Delete</th>
                                     <th>Comments</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {
-                                    contests.map((contest) => (
-                                        <tr key={contest._id}>
-                                            <th>{contest.contestName}</th>
-                                            <td>{contest.contestType}</td>
-                                            <td>{contest.contestTask.slice(0, 20)}</td>
-                                            <td>
-                                                <div>
-                                                    <button
-                                                        onClick={() => handleConfirm(contest._id)}
-                                                        className="btn btn-ghost text-lg bg-orange-600 text-white">
-                                                        <MdPendingActions />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <button
-                                                        onClick={() => handleDelete(contest._id)}
-                                                        className="btn btn-ghost text-lg bg-red-600 text-white">
-                                                        <MdDelete />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <button
-                                                        onClick={() => handleComment(contest._id)}
-                                                        className="btn btn-ghost text-lg bg-blue-600 text-white">
-                                                        <FaCommentAlt />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))
-                                }
+                                {contests.map((contest) => (
+                                    <tr key={contest._id}>
+                                        <th>{contest.contestName}</th>
+                                        <td>{contest.contestType}</td>
+                                        <td>{contest.contestTask.slice(0, 20)}</td>
+                                        <td>
+                                            <div>
+                                                <button
+                                                    onClick={() => handleConfirm(contest._id)}
+                                                    className="btn btn-ghost text-lg bg-orange-600 text-white">
+                                                    <MdPendingActions />
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <button
+                                                    onClick={() => handleDelete(contest._id)}
+                                                    className="btn btn-ghost text-lg bg-red-600 text-white">
+                                                    <MdDelete />
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <button
+                                                    onClick={() => handleComment(contest._id)}
+                                                    className="btn btn-ghost text-lg bg-blue-600 text-white">
+                                                    <FaCommentAlt />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+
+            {/* Modal for adding comment */}
+            <dialog id="comment_modal" className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg">Add Comment</h3>
+                    <textarea
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        className="w-full p-2 border border-gray-300 rounded mt-2"
+                        rows="4"
+                    ></textarea>
+                    <div className="modal-action">
+                        <button onClick={handleSubmitComment} className="btn btn-primary">Submit</button>
+                        <button onClick={() => document.getElementById('comment_modal').close()} className="btn">Close</button>
+                    </div>
+                </div>
+            </dialog>
         </div>
     );
 };
