@@ -15,6 +15,9 @@ import ContestUpdate from "../Pages/Dashboard/ContestUpdate/ContestUpdate";
 import AllContests from "../Pages/AllContests/AllContests";
 import ContestDetails from "../Pages/ContestDetails/ContestDetails";
 import ContestPayment from "../Pages/ContestPayment/ContestPayment";
+import PrivateRoute from "./PrivateRoute";
+import AdminRoutes from "./AdminRoutes";
+import CreatorRoutes from "./CreatorRoutes";
 
 
 const router = createBrowserRouter([
@@ -41,12 +44,16 @@ const router = createBrowserRouter([
             },
             {
                 path: "/contest-details/:id",
-                element: <ContestDetails></ContestDetails>,
+                element: <PrivateRoute>
+                    <ContestDetails></ContestDetails>
+                </PrivateRoute>,
                 loader: ({ params }) => fetch(`http://localhost:5000/contests/${params.id}`)
             },
             {
                 path: "/contest-payment/:id",
-                element: <ContestPayment></ContestPayment>,
+                element: <PrivateRoute>
+                    <ContestPayment></ContestPayment>
+                </PrivateRoute>,
                 loader: ({ params }) => fetch(`http://localhost:5000/contests/${params.id}`)
             },
         ]
@@ -65,11 +72,15 @@ const router = createBrowserRouter([
             // For Admin
             {
                 path: "manage-users",
-                element: <ManageUsers></ManageUsers>
+                element: <AdminRoutes>
+                    <ManageUsers></ManageUsers>
+                </AdminRoutes>
             },
             {
                 path: "manage-contests",
-                element: <ManageContests></ManageContests>
+                element: <AdminRoutes>
+                    <ManageContests></ManageContests>
+                </AdminRoutes>
             },
 
 
@@ -77,20 +88,28 @@ const router = createBrowserRouter([
             // for Creator
             {
                 path: "add-contest",
-                element: <AddContest></AddContest>
+                element: <CreatorRoutes>
+                    <AddContest></AddContest>
+                </CreatorRoutes>
             },
             {
                 path: "my-created-contest",
-                element: <MyCreatedContest></MyCreatedContest>
+                element: <CreatorRoutes>
+                    <MyCreatedContest></MyCreatedContest>
+                </CreatorRoutes>
             },
             {
                 path: "contest-update/:id",
-                element: <ContestUpdate></ContestUpdate>,
+                element: <CreatorRoutes>
+                    <ContestUpdate></ContestUpdate>
+                </CreatorRoutes>,
                 loader: ({ params }) => fetch(`http://localhost:5000/contests/${params.id}`)
             },
             {
                 path: "contest-submitted-page",
-                element: <ContestSubmittedPage></ContestSubmittedPage>
+                element: <CreatorRoutes>
+                    <ContestSubmittedPage></ContestSubmittedPage>
+                </CreatorRoutes>
             },
         ]
     }

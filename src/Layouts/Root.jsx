@@ -23,6 +23,7 @@ const Root = () => {
     </div>
 
     }
+    
     return (
         <div>
             <Navbar></Navbar>
