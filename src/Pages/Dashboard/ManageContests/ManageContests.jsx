@@ -103,6 +103,7 @@ const ManageContests = () => {
                         <table className="table table-zebra">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Contest Name</th>
                                     <th>Contest Type</th>
                                     <th>Contest Task</th>
@@ -111,10 +112,11 @@ const ManageContests = () => {
                                     <th>Comments</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                {contests.map((contest) => (
+                            <tbody className="inter">
+                                {contests.map((contest, idx) => (
                                     <tr key={contest._id}>
-                                        <th>{contest.contestName}</th>
+                                        <td>{idx + 1}</td>
+                                        <td className="ubuntu">{contest.contestName}</td>
                                         <td>{contest.contestType}</td>
                                         <td>{contest.contestTask.slice(0, 20)}</td>
                                         <td>

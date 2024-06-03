@@ -92,12 +92,12 @@ const ManageUsers = () => {
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody className="inter">
                                 {
                                     users.map((user, idx) => (
                                         <tr key={user._id}>
                                             <th>{idx + 1}</th>
-                                            <td>{user.name}</td>
+                                            <td className="ubuntu">{user.name}</td>
                                             <td>{user.email}</td>
                                             <td>
                                                 <select
