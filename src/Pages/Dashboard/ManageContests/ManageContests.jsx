@@ -17,7 +17,7 @@ const ManageContests = () => {
         }
     });
 
-    // contes delete
+    // contest delete
     const handleDelete = id => {
         Swal.fire({
             title: "Are you sure?",
