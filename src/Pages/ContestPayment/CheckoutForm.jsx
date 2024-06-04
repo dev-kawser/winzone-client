@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 
 const CheckoutForm = ({ contest }) => {
 
@@ -12,14 +11,12 @@ const CheckoutForm = ({ contest }) => {
     const elements = useElements();
     const [error, setError] = useState('');
     const [clientSecret, setClientSecret] = useState();
-    const [transactionId, setTransactionId] = useState();
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
-    const navigate = useNavigate();
 
 
 
-    const price = parseInt(contest.contestPrice);
+    const price = parseFloat(contest.contestPrice);
 
     useEffect(() => {
         if (price > 0) {
@@ -67,10 +64,25 @@ const CheckoutForm = ({ contest }) => {
         } else {
             if (paymentIntent.status === 'succeeded') {
 
-                setTransactionId(paymentIntent.id)
-                alert("done")
 
-               
+                const registrationDetails = {
+                    email: user.email,
+                    contestId: contest._id,
+                    transactionId: paymentIntent.id,
+                    status: "registered",
+                    contest: contest
+                };
+
+                const res = await axiosSecure.post("/register-contest", registrationDetails);
+                console.log(res.data);
+                if (res.data.success) {
+
+                    Swal.fire({
+                        title: "Payment Complete",
+                        text: `Transaction Id ${paymentIntent.id}`,
+                        icon: "success"
+                    });
+                }
             }
         }
     };
