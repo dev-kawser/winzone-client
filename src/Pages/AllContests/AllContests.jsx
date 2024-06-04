@@ -1,12 +1,12 @@
-
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const AllContests = () => {
     const axiosPublic = useAxiosPublic();
     const [contests, setContests] = useState([]);
     const [activeTab, setActiveTab] = useState("all");
+    const [searchParams] = useSearchParams();
 
     useEffect(() => {
         axiosPublic.get("/contests")
@@ -16,13 +16,21 @@ const AllContests = () => {
             .catch(err => console.error(err));
     }, [axiosPublic]);
 
+    // show tab with banner value
+    useEffect(() => {
+        const search = searchParams.get('search');
+        if (search) {
+            setActiveTab(search);
+        }
+    }, [searchParams]);
+
     const handleTabChange = (type) => {
-        setActiveTab(type);
+        setActiveTab(type.toLowerCase().replace(/\s+/g, ''));
     };
 
     const filteredContests = activeTab === "all"
         ? contests.filter(contest => contest.status === "confirmed")
-        : contests.filter(contest => contest.status === "confirmed" && contest.contestType === activeTab);
+        : contests.filter(contest => contest.status === "confirmed" && contest.contestType.toLowerCase().replace(/\s+/g, '') === activeTab);
 
     return (
         <div className="container mx-auto mt-5">
@@ -34,31 +42,17 @@ const AllContests = () => {
                 </div>
             </div>
             <div className="tabs mt-10 flex flex-wrap justify-center">
-
                 <button onClick={() => handleTabChange("all")} className={`tab tab-lifted ${activeTab === "all" ? "tab-active border-2 font-semibold" : ""}`}>All</button>
-
-                <button onClick={() => handleTabChange("imageDesign")} className={`tab tab-lifted ${activeTab === "imageDesign" ? "tab-active border-2 font-semibold" : ""}`}>Image Design</button>
-
-                <button onClick={() => handleTabChange("digitalAdvertisement")} className={`tab tab-lifted ${activeTab === "digitalAdvertisement" ? "tab-active border-2 font-semibold" : ""}`}>Digital Advertisement</button>
-
-                <button onClick={() => handleTabChange("marketingStrategy")} className={`tab tab-lifted ${activeTab === "marketingStrategy" ? "tab-active border-2 font-semibold" : ""}`}>Marketing Strategy</button>
-
-                <button onClick={() => handleTabChange("articleWriting")} className={`tab tab-lifted ${activeTab === "articleWriting" ? "tab-active border-2 font-semibold" : ""}`}>Article Writing</button>
-
-                <button onClick={() => handleTabChange("gamingReview")} className={`tab tab-lifted ${activeTab === "gamingReview" ? "tab-active border-2 font-semibold" : ""}`}>Gaming Review</button>
-
-                <button onClick={() => handleTabChange("bookReview")} className={`tab tab-lifted ${activeTab === "bookReview" ? "tab-active border-2 font-semibold" : ""}`}>Book Review</button>
-
-                <button onClick={() => handleTabChange("businessIdea")} className={`tab tab-lifted ${activeTab === "businessIdea" ? "tab-active border-2 font-semibold" : ""}`}>Business Idea</button>
-
-                <button onClick={() => handleTabChange("movieReview")} className={`tab tab-lifted ${activeTab === "movieReview" ? "tab-active border-2 font-semibold" : ""}`}>Movie Review</button>
-
+                <button onClick={() => handleTabChange("imageDesign")} className={`tab tab-lifted ${activeTab === "imagedesign" ? "tab-active border-2 font-semibold" : ""}`}>Image Design</button>
+                <button onClick={() => handleTabChange("digitalAdvertisement")} className={`tab tab-lifted ${activeTab === "digitaladvertisement" ? "tab-active border-2 font-semibold" : ""}`}>Digital Advertisement</button>
+                <button onClick={() => handleTabChange("marketingStrategy")} className={`tab tab-lifted ${activeTab === "marketingstrategy" ? "tab-active border-2 font-semibold" : ""}`}>Marketing Strategy</button>
+                <button onClick={() => handleTabChange("articleWriting")} className={`tab tab-lifted ${activeTab === "articlewriting" ? "tab-active border-2 font-semibold" : ""}`}>Article Writing</button>
+                <button onClick={() => handleTabChange("gamingReview")} className={`tab tab-lifted ${activeTab === "gamingreview" ? "tab-active border-2 font-semibold" : ""}`}>Gaming Review</button>
+                <button onClick={() => handleTabChange("bookReview")} className={`tab tab-lifted ${activeTab === "bookreview" ? "tab-active border-2 font-semibold" : ""}`}>Book Review</button>
+                <button onClick={() => handleTabChange("businessIdea")} className={`tab tab-lifted ${activeTab === "businessidea" ? "tab-active border-2 font-semibold" : ""}`}>Business Idea</button>
+                <button onClick={() => handleTabChange("movieReview")} className={`tab tab-lifted ${activeTab === "moviereview" ? "tab-active border-2 font-semibold" : ""}`}>Movie Review</button>
             </div>
-
-
             <div className="divider"></div>
-
-
             <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {filteredContests.map(contest => (
                     <div key={contest._id} className="card shadow-lg p-5 bg-white rounded-md">
