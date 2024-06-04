@@ -4,6 +4,7 @@ import { createContext, useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import auth from "../Firebase/firebase.config"
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 
 
 export const AuthContext = createContext('')
@@ -11,7 +12,9 @@ export const AuthContext = createContext('')
 
 const AuthProvider = ({ children }) => {
 
-    
+    const axiosPublic = useAxiosPublic()
+
+
     const googleProvider = new GoogleAuthProvider();
 
     const [user, setUser] = useState(null)
@@ -44,18 +47,28 @@ const AuthProvider = ({ children }) => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
             if (currentUser) {
                 setUser(currentUser);
-                setLoading(false);
+
+                const userInfo = { email: currentUser.email }
+
+                axiosPublic.post("/jwt", userInfo)
+                    .then(res => {
+                        if (res.data.token) {
+                            localStorage.setItem("access-token", res.data.token)
+                            setLoading(false);
+                        }
+                    })
             }
             else {
                 setUser(null)
                 setLoading(false);
+                localStorage.removeItem("access-token")
             }
         });
 
         return () => unSubscribe()
 
 
-    }, [])
+    }, [axiosPublic])
 
 
 

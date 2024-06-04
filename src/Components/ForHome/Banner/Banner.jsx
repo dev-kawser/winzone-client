@@ -16,7 +16,7 @@ const Banner = () => {
                 <div className="hero-overlay bg-opacity-60"></div>
                 <div className="hero-content text-left text-neutral-content">
                     <div className="max-w-4xl">
-                        <h1 className="mb-5 text-4xl lg:text-5xl font-bold ubuntu">Join the Ultimate Challenge at <span className="shadow-lg shadow-[#d32f2f]">WinZone!</span></h1>
+                        <h1 className="mb-5 text-4xl lg:text-5xl font-bold ubuntu">Join the Ultimate Challenge at <span>WinZone!</span></h1>
                         <p className="mb-5 text-sm lg:text-base inter">Unleash your competitive spirit and win amazing prizes! ContestCraze offers thrilling challenges across various categories. Whether you’re a trivia master, a creative genius, or a gaming enthusiast, there’s something for everyone. Sign up now and take your shot at glory!</p>
                         <div>
                             <div className="max-w-4xl mx-auto">
