@@ -109,7 +109,7 @@ const MyCreatedContest = () => {
                                         </button>
                                     </td>
                                     <td>
-                                        <Link to="/dashboard/contest-submitted-page">
+                                        <Link to={`/dashboard/contest-submitted-page/${contest._id}`}>
                                             <button
                                                 className="btn btn-ghost lg:text-base bg-green-600 text-white">
                                                 See Submissions

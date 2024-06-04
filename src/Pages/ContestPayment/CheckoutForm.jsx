@@ -67,6 +67,7 @@ const CheckoutForm = ({ contest }) => {
 
                 const registrationDetails = {
                     email: user.email,
+                    name: user.displayName,
                     contestId: contest._id,
                     transactionId: paymentIntent.id,
                     status: "registered",

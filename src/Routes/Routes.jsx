@@ -106,6 +106,13 @@ const router = createBrowserRouter([
                 loader: ({ params }) => fetch(`http://localhost:5000/contests/${params.id}`)
             },
             {
+                path: "contest-submitted-page/:id",
+                element: <CreatorRoutes>
+                    <ContestSubmittedPage></ContestSubmittedPage>
+                </CreatorRoutes>,
+                loader: ({ params }) => fetch(`http://localhost:5000/contests/${params.id}`)
+            },
+            {
                 path: "contest-submitted-page",
                 element: <CreatorRoutes>
                     <ContestSubmittedPage></ContestSubmittedPage>
