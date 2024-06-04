@@ -4,11 +4,14 @@ import useAuth from "../../../Hooks/useAuth";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { MdDelete } from "react-icons/md";
-import { FaEdit } from "react-icons/fa";
+import { FaCommentAlt, FaEdit } from "react-icons/fa";
+import { useState } from "react";
 
 const MyCreatedContest = () => {
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
+
+    const [comment, setComment] = useState([]);
 
     const { refetch, data: contests = [] } = useQuery({
         queryKey: ["contests", user?.email],
@@ -43,6 +46,10 @@ const MyCreatedContest = () => {
             }
         });
     };
+    const handleViewComments = (comment) => {
+        setComment(comment || []);
+        document.getElementById('comment_modal').showModal();
+    };
 
 
 
@@ -63,6 +70,7 @@ const MyCreatedContest = () => {
                                 <th>Edit</th>
                                 <th>Delete</th>
                                 <th>See Submissions</th>
+                                <th>Comments</th>
                             </tr>
                         </thead>
                         <tbody className="inter">
@@ -103,10 +111,17 @@ const MyCreatedContest = () => {
                                     <td>
                                         <Link to="/dashboard/contest-submitted-page">
                                             <button
-                                                className="btn btn-ghost lg:text-base bg-blue-600 text-white">
+                                                className="btn btn-ghost lg:text-base bg-green-600 text-white">
                                                 See Submissions
                                             </button>
                                         </Link>
+                                    </td>
+                                    <td>
+                                        <button
+                                            onClick={() => handleViewComments(contest.comment)}
+                                            className="btn btn-ghost lg:text-base bg-blue-600  text-white">See Comments
+                                            <FaCommentAlt />
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
@@ -114,6 +129,22 @@ const MyCreatedContest = () => {
                     </table>
                 </div>
             </div>
+            {/* Modal for viewing comments */}
+            <dialog id="comment_modal" className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg">Comments</h3>
+                    <div className="overflow-y-auto max-h-64">
+
+                        <p>{comment}</p>
+
+                    </div>
+                    <div className="modal-action">
+                        <button onClick={() => document.getElementById('comment_modal').close()} className="btn">Close</button>
+                    </div>
+                </div>
+            </dialog>
+
+
         </div>
     );
 };
