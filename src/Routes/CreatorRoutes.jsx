@@ -12,7 +12,7 @@ const CreatorRoutes = ({ children }) => {
 
     const { user, loading } = useAuth();
     const location = useLocation()
-    const { isAdmin, isLoading } = useContestCreator();
+    const { isCreator, isLoading } = useContestCreator();
 
     if (loading || isLoading) {
         return <div className="flex lg:h-[500px] justify-center items-center lg:mt-20 mx-auto">
@@ -20,7 +20,7 @@ const CreatorRoutes = ({ children }) => {
         </div>
     }
 
-    if (user && isAdmin) {
+    if (user && isCreator) {
         return children
     }
     return <Navigate to="/" state={location?.pathname || "/"}></Navigate>
