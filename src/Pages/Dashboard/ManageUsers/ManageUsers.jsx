@@ -121,7 +121,7 @@ const ManageUsers = () => {
                                             </td>
                                             <td>
                                                 <div>
-                                                <button
+                                                    <button
                                                         onClick={() => handleBlockUnblock(user._id, user.name, user.isBlocked)}
                                                         className={`btn btn-ghost text-lg ${user.isBlocked ? "bg-yellow-600" : "bg-gray-600"} text-white`}
                                                     >

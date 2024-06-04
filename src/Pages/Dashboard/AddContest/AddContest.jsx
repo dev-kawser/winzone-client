@@ -5,8 +5,12 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import useCurrentUser from "../../../Hooks/useCurrentUser";
 
 const AddContest = () => {
+
+    const { currentUser } = useCurrentUser();
+
     const [startDate, setStartDate] = useState(new Date());
 
     const { user } = useAuth();
@@ -202,12 +206,16 @@ const AddContest = () => {
                             </div>
 
                             <div>
-                                <button
+                                {!currentUser?.isBlocked && (<button
                                     type="submit"
                                     className="hover:shadow-form rounded-md bg-[#d32f2f] py-3 px-8 text-center text-base font-semibold text-white outline-none"
                                 >
                                     Submit
-                                </button>
+                                </button>)}
+                                
+                                {currentUser?.isBlocked && (
+                                    <div className="mt-5 font-bold text-red-500">You are blocked By Admin and you cannot add contest</div>
+                                )}
                             </div>
                         </form>
                     </div>

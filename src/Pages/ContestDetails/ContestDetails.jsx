@@ -1,14 +1,14 @@
 import { Link, useLoaderData } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FaArrowDownLong } from "react-icons/fa6";
-// import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import useCurrentUser from "../../Hooks/useCurrentUser";
 
 const ContestDetails = () => {
 
+    const { currentUser } = useCurrentUser();
 
     const contest = useLoaderData();
-    // const axiosPublic = useAxiosPublic();
-    // const [participantsCount, setParticipantsCount] = useState(contest.participantsCount);
+
     const [timeRemaining, setTimeRemaining] = useState(0);
 
     useEffect(() => {
@@ -64,9 +64,16 @@ const ContestDetails = () => {
                     <p className="text-gray-700 mt-2">{timeRemaining > 0 ? formatTime(timeRemaining) : "Not available"}</p>
                 </div>
 
-                <Link to={`/contest-payment/${contest._id}`}>
-                    <button className="btn btn-ghost mt-5 bg-[#d32f2f] text-white">Register</button>
-                </Link>
+                {!currentUser?.isBlocked && (
+                    <Link to={`/contest-payment/${contest._id}`}>
+                        <button className="btn btn-ghost mt-5 bg-[#d32f2f] text-white">Register</button>
+                    </Link>
+                )}
+
+                {currentUser?.isBlocked && (
+                    <div className="mt-5 font-bold text-red-500">You are blocked By Admin and cannot register</div>
+                )}
+
             </div>
         </div>
     );
