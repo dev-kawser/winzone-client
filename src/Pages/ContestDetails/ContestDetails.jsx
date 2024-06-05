@@ -48,7 +48,7 @@ const ContestDetails = () => {
             <div className="mt-5 p-5 bg-white rounded-lg shadow-lg">
                 <img src={contest.contestImage} alt={contest.contestName} className="w-full h-64 object-cover rounded-md" />
                 <p className="text-gray-700 mt-5">Participants: {contest.participantsCount}</p>
-                <p className="text-gray-700 mt-5">{contest.contestDescription}</p>
+                <p className="text-gray-700 mt-5">Your Task: {contest.contestTask}</p>
                 <p className="text-gray-700 mt-5">Prize: ${contest.contestPrice}</p>
 
                 {contest.winner && (

@@ -5,7 +5,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
 
-const CheckoutForm = ({ contest }) => {
+const CheckoutForm = ({ contest, task }) => {
 
     const stripe = useStripe();
     const elements = useElements();
@@ -67,10 +67,12 @@ const CheckoutForm = ({ contest }) => {
 
                 const registrationDetails = {
                     email: user.email,
+                    image: user.photoURL,
                     name: user.displayName,
                     contestId: contest._id,
                     transactionId: paymentIntent.id,
                     status: "registered",
+                    submittedTask: task,
                     contest: contest
                 };
 
@@ -109,7 +111,7 @@ const CheckoutForm = ({ contest }) => {
             <button
                 className="btn btn-primary btn-circle p-1 mt-4"
                 type="submit"
-                disabled={!stripe || !clientSecret}
+                disabled={!stripe || !clientSecret || task == ""}
             >
                 Pay
             </button>

@@ -29,6 +29,7 @@ const AddContest = () => {
         const status = "pending";
         const contestName = data.contestName;
         const contestPrice = data.contestPrice;
+        const contestPrize = data.contestPrize;
         const contestImage = data.contestImage;
         const contestTask = data.contestTask;
         const contestType = data.contestType;
@@ -42,6 +43,7 @@ const AddContest = () => {
             status: status,
             contestName: contestName,
             contestPrice: contestPrice,
+            contestPrize: contestPrize,
             contestImage: contestImage,
             contestTask: contestTask,
             contestType: contestType,
@@ -51,7 +53,6 @@ const AddContest = () => {
 
         }
 
-        console.log(contestInfo);
 
         axiosSecure.post("/contests", contestInfo)
             .then(res => {
@@ -80,6 +81,9 @@ const AddContest = () => {
                 <div className="flex items-center justify-center p-12">
                     <div className="mx-auto w-full max-w-[550px]">
                         <form onSubmit={handleSubmit(onSubmit)}>
+
+
+
                             <div className="-mx-3 flex flex-wrap">
                                 <div className="w-full px-3 sm:w-1/2">
                                     <div className="mb-5">
@@ -115,21 +119,42 @@ const AddContest = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="mb-5">
-                                <label
-                                    htmlFor="guest"
-                                    className="mb-3 block text-base font-medium text-[#07074D]"
-                                >
-                                    Contest Image*
-                                </label>
-                                <input
-                                    type="url"
-                                    name="guest"
-                                    id="guest"
-                                    className="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                    {...register("contestImage")}
-                                />
+                            <div className="-mx-3 flex flex-wrap">
+                                <div className="w-full px-3 sm:w-1/2">
+                                    <div className="mb-5">
+                                        <label
+                                            htmlFor="fName"
+                                            className="mb-3 block text-base font-medium text-[#07074D]"
+                                        >
+                                            Contest Image*
+                                        </label>
+                                        <input
+                                            type="url"
+                                            name="fName"
+                                            id="fName"
+                                            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            {...register("contestImage")}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="w-full px-3 sm:w-1/2">
+                                    <div className="mb-5">
+                                        <label
+                                            htmlFor="lName"
+                                            className="mb-3 block text-base font-medium text-[#07074D]"
+                                        >
+                                            Contest Prize*
+                                        </label>
+                                        <input
+                                            type="text"
+                                            name="lName"
+                                            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                                            {...register("contestPrize")}
+                                        />
+                                    </div>
+                                </div>
                             </div>
+
                             <div className="mb-5">
                                 <label
                                     htmlFor="guest2"
@@ -212,7 +237,7 @@ const AddContest = () => {
                                 >
                                     Submit
                                 </button>)}
-                                
+
                                 {currentUser?.isBlocked && (
                                     <div className="mt-5 font-bold text-red-500">You are blocked By Admin and you cannot add contest</div>
                                 )}

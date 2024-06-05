@@ -11,7 +11,7 @@ const ContestSubmittedPage = () => {
     const [selectedContest, setSelectedContest] = useState(null);
 
     const { data: registerContests = [], refetch } = useQuery({
-        queryKey: ["register-contests", contest._id],
+        queryKey: ["register-contests", contest?._id],
         queryFn: async () => {
             const res = await axiosSecure.get("/register-contests");
             return res.data;
@@ -79,10 +79,10 @@ const ContestSubmittedPage = () => {
                                     <button
                                         onClick={() => handleContestClick(contest)}
                                         className="btn btn-link">
-                                        {contest.contestName}
+                                        {contest?.contestName}
                                     </button>
                                 </td>
-                                <td>${contest.contestPrice}</td>
+                                <td>{contest?.contestPrize}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -108,9 +108,7 @@ const ContestSubmittedPage = () => {
                                         <td>{submission.name}</td>
                                         <td>{submission.email}</td>
                                         <td>
-                                            <a href={submission.taskLink} target="_blank" className="text-blue-600 underline">
-                                                View Task
-                                            </a>
+                                            {submission.submittedTask.slice(0,30)}
                                         </td>
                                         <td>
                                             {!submission.winner && !winnerDeclared && (
