@@ -1,51 +1,63 @@
-
-
 import { useLoaderData } from "react-router-dom";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useState } from "react";
-// import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
 import { GiPodiumWinner } from "react-icons/gi";
+import Swal from "sweetalert2";
 
 const ContestSubmittedPage = () => {
     const contest = useLoaderData();
     const axiosSecure = useAxiosSecure();
     const [selectedContest, setSelectedContest] = useState(null);
 
-    const { data: registerContests = [] } = useQuery({
-        queryKey: ["contests"],
+    const { data: registerContests = [], refetch } = useQuery({
+        queryKey: ["register-contests", contest._id],
         queryFn: async () => {
             const res = await axiosSecure.get("/register-contests");
             return res.data;
         }
     });
 
-    const filterContest = registerContests.filter(con => con.contestId == contest._id)
+    const filteredContests = registerContests.filter(con => con.contestId === contest._id);
 
-    const handleContestClick = async (contest) => {
+    const handleContestClick = (contest) => {
         setSelectedContest(contest);
-
-
-
     };
 
-    const handleDeclareWin = async (contest) => {
-
-        const winnerName = contest.name;
-        const winnerEmail = contest.email;
-        const ContestName = contest.contest.contestName;
-        const contestImage = contest.contest.contestImage;
-
-        const winnerInfo = {
-            winnerName: winnerName,
-            winnerEmail: winnerEmail,
-            ContestName: ContestName,
-            contestImage: contestImage,
+    const handleDeclareWin = async (submission) => {
+        try {
+            const res = await axiosSecure.put(`/register-contests/update/${submission._id}`, {
+                winner: true,
+                contestId: submission.contestId
+            });
+            console.log(res.data);
+            if (res.data.acknowledged) {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Winner declared successfully",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                refetch();
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Failed to declare the winner. Please try again.",
+                });
+            }
+        } catch (error) {
+            console.error("Error declaring winner:", error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+            });
         }
-
-        console.log(winnerInfo);
-
     };
+
+    const winnerDeclared = filteredContests.some(submission => submission.winner);
 
     return (
         <div>
@@ -62,8 +74,7 @@ const ContestSubmittedPage = () => {
                             </tr>
                         </thead>
                         <tbody className="inter">
-
-                            <tr >
+                            <tr>
                                 <td>
                                     <button
                                         onClick={() => handleContestClick(contest)}
@@ -73,7 +84,6 @@ const ContestSubmittedPage = () => {
                                 </td>
                                 <td>${contest.contestPrice}</td>
                             </tr>
-
                         </tbody>
                     </table>
                 </div>
@@ -93,24 +103,28 @@ const ContestSubmittedPage = () => {
                                 </tr>
                             </thead>
                             <tbody className="inter">
-                                {filterContest?.map((contest) => (
-                                    <tr key={contest._id}>
-                                        <td>{contest.name}</td>
-                                        <td>{contest.email}</td>
+                                {filteredContests?.map((submission) => (
+                                    <tr key={submission._id}>
+                                        <td>{submission.name}</td>
+                                        <td>{submission.email}</td>
                                         <td>
-                                            <a href="" target="_blank" className="text-blue-600 underline">
+                                            <a href={submission.taskLink} target="_blank" className="text-blue-600 underline">
                                                 View Task
                                             </a>
                                         </td>
                                         <td>
-                                            {contest.isWinner ? (
-                                                <span className="text-green-500 font-semibold">Winner</span>
-                                            ) : (
+                                            {!submission.winner && !winnerDeclared && (
                                                 <button
-                                                    onClick={() => handleDeclareWin(contest)}
+                                                    onClick={() => handleDeclareWin(submission)}
                                                     className="btn btn-ghost text-lg bg-blue-500 text-white">
                                                     <GiPodiumWinner />
                                                 </button>
+                                            )}
+                                            {submission.winner && (
+                                                <span className="text-green-500 font-semibold">Winner</span>
+                                            )}
+                                            {!submission.winner && winnerDeclared && (
+                                                <span className="text-red-500 font-semibold">Unsuccess</span>
                                             )}
                                         </td>
                                     </tr>
@@ -125,6 +139,3 @@ const ContestSubmittedPage = () => {
 };
 
 export default ContestSubmittedPage;
-
-
-
