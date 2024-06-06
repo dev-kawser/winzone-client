@@ -5,7 +5,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
 import Swal from "sweetalert2";
 
-const CheckoutForm = ({ contest, task }) => {
+const CheckoutForm = ({ contest }) => {
 
     const stripe = useStripe();
     const elements = useElements();
@@ -23,7 +23,6 @@ const CheckoutForm = ({ contest, task }) => {
             axiosSecure.post('/create-payment-intent', { price: price })
                 .then(res => {
                     setClientSecret(res.data.clientSecret);
-                    console.log(res.data.clientSecret);
                 });
         }
     }, [axiosSecure, price]);
@@ -71,8 +70,7 @@ const CheckoutForm = ({ contest, task }) => {
                     name: user.displayName,
                     contestId: contest._id,
                     transactionId: paymentIntent.id,
-                    status: "registered",
-                    submittedTask: task,
+                    status: "Success",
                     contest: contest
                 };
 

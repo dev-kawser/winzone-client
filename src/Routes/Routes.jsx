@@ -18,6 +18,7 @@ import ContestPayment from "../Pages/ContestPayment/ContestPayment";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoutes from "./AdminRoutes";
 import CreatorRoutes from "./CreatorRoutes";
+import MyParticipatedContest from "../Pages/Dashboard/MyParticipatedContest/MyParticipatedContest";
 
 
 const router = createBrowserRouter([
@@ -67,6 +68,14 @@ const router = createBrowserRouter([
             {
                 path: "welcome",
                 element: <Welcome></Welcome>
+            },
+
+            // For User
+            {
+                path: "my-participated-contest",
+                element: <PrivateRoute>
+                    <MyParticipatedContest></MyParticipatedContest>
+                </PrivateRoute>
             },
 
             // For Admin
