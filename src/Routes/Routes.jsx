@@ -19,6 +19,7 @@ import PrivateRoute from "./PrivateRoute";
 import AdminRoutes from "./AdminRoutes";
 import CreatorRoutes from "./CreatorRoutes";
 import MyParticipatedContest from "../Pages/Dashboard/MyParticipatedContest/MyParticipatedContest";
+import MyWinningContests from "../Pages/Dashboard/MyWinningContests/MyWinningContests";
 
 
 const router = createBrowserRouter([
@@ -75,6 +76,12 @@ const router = createBrowserRouter([
                 path: "my-participated-contest",
                 element: <PrivateRoute>
                     <MyParticipatedContest></MyParticipatedContest>
+                </PrivateRoute>
+            },
+            {
+                path: "my-winning-contest",
+                element: <PrivateRoute>
+                    <MyWinningContests></MyWinningContests>
                 </PrivateRoute>
             },
 

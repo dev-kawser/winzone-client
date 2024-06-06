@@ -3,11 +3,14 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import useAuth from "../../../Hooks/useAuth";
 import Swal from "sweetalert2";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const MyParticipatedContest = () => {
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
     const [sortBy, setSortBy] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 3;
 
     const { data: contests = [], refetch } = useQuery({
         queryKey: ["participatedContests", user?.email],
@@ -35,7 +38,6 @@ const MyParticipatedContest = () => {
         event.preventDefault();
         const task = event.target.task.value;
         if (task) {
-
             const res = await axiosSecure.patch(`/register-contests/${id}`, {
                 submittedTask: task,
                 participate: true,
@@ -43,21 +45,32 @@ const MyParticipatedContest = () => {
             if (res.data.modifiedCount > 0) {
                 Swal.fire({
                     title: "Success",
-                    text: "You are a participate now",
-                    icon: "success"
+                    text: "You are a participant now",
+                    icon: "success",
                 });
             }
             refetch();
-
         }
     };
+
+    const handlePageChange = (newPage) => {
+        setCurrentPage(newPage);
+    };
+
+    // Pagination logic
+    const sortedContests = sortContests();
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = sortedContests.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(sortedContests.length / itemsPerPage);
 
     return (
         <div>
             <div className="w-full bg-[#d32f2f] lg:py-8 py-4">
-                <h1 className="text-center ubuntu text-white text-lg lg:text-2xl font-bold">My Participated Contests</h1>
+                <h1 className="text-center ubuntu text-white text-lg lg:text-2xl font-bold">
+                    My Participated Contests
+                </h1>
             </div>
-            {/* Sorting dropdown */}
             <div className="mt-10 flex justify-start ml-5">
                 <select value={sortBy} onChange={handleSortChange} className="px-3 py-2 border border-gray-300 rounded-md">
                     <option value="">Sort by</option>
@@ -65,7 +78,7 @@ const MyParticipatedContest = () => {
                 </select>
             </div>
             <div className="mt-5 mx-5 grid grid-cols-1 lg:grid-cols-3 gap-4">
-                {sortContests().map((contest) => (
+                {currentItems.map((contest) => (
                     <div key={contest._id} className="card bg-white shadow-lg rounded-lg p-4">
                         <h2 className="text-lg font-bold mb-2">{contest.contest.contestName}</h2>
                         <p className="text-gray-600 mb-2">
@@ -79,8 +92,6 @@ const MyParticipatedContest = () => {
                             <span className="text-lg font-medium">Payment Status:</span>{" "}
                             <span className="text-green-600 font-semibold">{contest.status}</span>
                         </p>
-
-                        {/* Form for submitting task */}
                         <form onSubmit={(e) => handleSubmit(e, contest._id)} className="flex flex-col mb-5">
                             <label htmlFor="submittedTask" className="text-lg font-medium">Submit Task*</label>
                             <input
@@ -95,6 +106,31 @@ const MyParticipatedContest = () => {
                         </form>
                     </div>
                 ))}
+            </div>
+            <div className="flex justify-center mt-5">
+                <button
+                    className="px-4 py-2 mx-1 bg-gray-300 rounded"
+                    disabled={currentPage === 1}
+                    onClick={() => handlePageChange(currentPage - 1)}
+                >
+                    <FaArrowLeft />
+                </button>
+                {Array.from({ length: totalPages }, (_, index) => (
+                    <button
+                        key={index}
+                        className={`px-4 py-2 mx-1 ${currentPage === index + 1 ? 'bg-[#d32f2f] text-white' : 'bg-gray-300'}`}
+                        onClick={() => handlePageChange(index + 1)}
+                    >
+                        {index + 1}
+                    </button>
+                ))}
+                <button
+                    className="px-4 py-2 mx-1 bg-gray-300 rounded"
+                    disabled={currentPage === totalPages}
+                    onClick={() => handlePageChange(currentPage + 1)}
+                >
+                    <FaArrowRight />
+                </button>
             </div>
         </div>
     );

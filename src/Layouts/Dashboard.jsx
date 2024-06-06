@@ -72,7 +72,7 @@ const Dashboard = () => {
                                         </NavLink>
                                     </li>
                                     <li>
-                                        <NavLink to="/dashboard/contest-submitted-page" className="flex items-center gap-2 py-2 px-4 hover:bg-[#553c9a] rounded-md">
+                                        <NavLink to="/dashboard/my-winning-contest" className="flex items-center gap-2 py-2 px-4 hover:bg-[#553c9a] rounded-md">
 
                                             <span className="flex gap-1 items-center"> <GiTargetPrize />My Winning Contest Page</span>
                                         </NavLink>
