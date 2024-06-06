@@ -108,7 +108,7 @@ const ContestSubmittedPage = () => {
                                         <td>{submission.name}</td>
                                         <td>{submission.email}</td>
                                         <td>
-                                            {submission.submittedTask.length > 40
+                                            {submission.submittedTask?.length > 40
                                                 ? submission.submittedTask.slice(0, 50) + "..."
                                                 : submission.submittedTask}
                                         </td>
