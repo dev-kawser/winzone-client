@@ -111,7 +111,7 @@ const CheckoutForm = ({ contest, task }) => {
             <button
                 className="btn btn-primary btn-circle p-1 mt-4"
                 type="submit"
-                disabled={!stripe || !clientSecret || task == ""}
+                disabled={!stripe || !clientSecret}
             >
                 Pay
             </button>

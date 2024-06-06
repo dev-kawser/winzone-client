@@ -6,12 +6,15 @@ import Swal from "sweetalert2";
 import { MdDelete } from "react-icons/md";
 import { FaCommentAlt, FaEdit } from "react-icons/fa";
 import { useState } from "react";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
 const MyCreatedContest = () => {
     const axiosSecure = useAxiosSecure();
     const { user } = useAuth();
 
     const [comment, setComment] = useState([]);
+    const [page, setPage] = useState(1);
+    const contestsPerPage = 7; 
 
     const { refetch, data: contests = [] } = useQuery({
         queryKey: ["contests", user?.email],
@@ -46,12 +49,18 @@ const MyCreatedContest = () => {
             }
         });
     };
+
     const handleViewComments = (comment) => {
         setComment(comment || []);
         document.getElementById('comment_modal').showModal();
     };
 
+    
+    const indexOfLastContest = page * contestsPerPage;
+    const indexOfFirstContest = indexOfLastContest - contestsPerPage;
+    const currentContests = contests.slice(indexOfFirstContest, indexOfLastContest);
 
+    const totalPages = Math.ceil(contests.length / contestsPerPage);
 
     return (
         <div>
@@ -74,7 +83,7 @@ const MyCreatedContest = () => {
                             </tr>
                         </thead>
                         <tbody className="inter">
-                            {contests?.map((contest) => (
+                            {currentContests.map((contest) => (
                                 <tr key={contest._id}>
                                     <td className="ubuntu">{contest.contestName}</td>
                                     <td>{contest.contestType}</td>
@@ -128,6 +137,23 @@ const MyCreatedContest = () => {
                         </tbody>
                     </table>
                 </div>
+                <div className="flex justify-center mt-10">
+                    <button
+                        className="btn btn-outline btn-sm mx-2"
+                        onClick={() => setPage(page => Math.max(page - 1, 1))}
+                        disabled={page === 1}
+                    >
+                        <FaArrowLeft />
+                    </button>
+                    <span className="mx-2">Page {page} of {totalPages}</span>
+                    <button
+                        className="btn btn-outline btn-sm mx-2"
+                        onClick={() => setPage(page => Math.min(page + 1, totalPages))}
+                        disabled={page === totalPages}
+                    >
+                        <FaArrowRight />
+                    </button>
+                </div>
             </div>
             {/* Modal for viewing comments */}
             <dialog id="comment_modal" className="modal modal-bottom sm:modal-middle">
@@ -143,8 +169,6 @@ const MyCreatedContest = () => {
                     </div>
                 </div>
             </dialog>
-
-
         </div>
     );
 };

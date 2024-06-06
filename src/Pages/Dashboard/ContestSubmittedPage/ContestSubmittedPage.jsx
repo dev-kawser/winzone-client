@@ -18,7 +18,7 @@ const ContestSubmittedPage = () => {
         }
     });
 
-    const filteredContests = registerContests.filter(con => con.contestId === contest._id);
+    const filteredContests = registerContests.filter(con => con.contestId === contest?._id);
 
     const handleContestClick = (contest) => {
         setSelectedContest(contest);
@@ -57,7 +57,7 @@ const ContestSubmittedPage = () => {
         }
     };
 
-    const winnerDeclared = filteredContests.some(submission => submission.winner);
+    const winnerDeclared = filteredContests?.some(submission => submission.winner);
 
     return (
         <div>
@@ -108,7 +108,9 @@ const ContestSubmittedPage = () => {
                                         <td>{submission.name}</td>
                                         <td>{submission.email}</td>
                                         <td>
-                                            {submission.submittedTask.slice(0,30)}
+                                            {submission.submittedTask.length > 40
+                                                ? submission.submittedTask.slice(0, 50) + "..."
+                                                : submission.submittedTask}
                                         </td>
                                         <td>
                                             {!submission.winner && !winnerDeclared && (

@@ -65,7 +65,9 @@ const Register = () => {
                     })
                     .catch()
             })
-            .catch()
+            .catch(err => {
+                toast.error(err.message)
+            })
     }
 
     const handleGoogleRegister = () => {

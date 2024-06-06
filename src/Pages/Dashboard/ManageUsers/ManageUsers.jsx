@@ -1,11 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
-import { FaUserShield } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaUserShield } from "react-icons/fa";
 import { MdBlock, MdDelete } from "react-icons/md";
+import { useState } from "react";
 
 const ManageUsers = () => {
     const axiosSecure = useAxiosSecure();
+    const [page, setPage] = useState(1);
+    const usersPerPage = 7;
 
     const { refetch, data: users = [] } = useQuery({
         queryKey: ["users"],
@@ -73,6 +76,13 @@ const ManageUsers = () => {
         });
     };
 
+
+    const indexOfLastUser = page * usersPerPage;
+    const indexOfFirstUser = indexOfLastUser - usersPerPage;
+    const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+
+    const totalPages = Math.ceil(users.length / usersPerPage);
+
     return (
         <div>
             <div className="w-full bg-[#d32f2f] lg:py-8 py-4">
@@ -94,9 +104,9 @@ const ManageUsers = () => {
                             </thead>
                             <tbody className="inter">
                                 {
-                                    users.map((user, idx) => (
+                                    currentUsers.map((user, idx) => (
                                         <tr key={user._id}>
-                                            <th>{idx + 1}</th>
+                                            <th>{indexOfFirstUser + idx + 1}</th>
                                             <td className="ubuntu">{user.name}</td>
                                             <td>{user.email}</td>
                                             <td>
@@ -135,6 +145,23 @@ const ManageUsers = () => {
                             </tbody>
                         </table>
                     </div>
+                    <div className="flex justify-center mt-10">
+                <button
+                    className="btn btn-outline btn-sm mx-2"
+                    onClick={() => setPage(page => Math.max(page - 1, 1))}
+                    disabled={page === 1}
+                >
+                    <FaArrowLeft />
+                </button>
+                <span className="mx-2">Page {page} of {totalPages}</span>
+                <button
+                    className="btn btn-outline btn-sm mx-2"
+                    onClick={() => setPage(page => Math.min(page + 1, totalPages))}
+                    disabled={page === totalPages}
+                >
+                    <FaArrowRight />
+                </button>
+            </div>
                 </div>
             </div>
         </div>

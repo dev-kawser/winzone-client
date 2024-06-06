@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { MdDelete, MdPendingActions } from "react-icons/md";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
-import { FaCommentAlt } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaCommentAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import { GiConfirmed } from "react-icons/gi";
@@ -10,6 +10,8 @@ const ManageContests = () => {
     const axiosSecure = useAxiosSecure();
     const [currentContestId, setCurrentContestId] = useState(null);
     const [comment, setComment] = useState("");
+    const [page, setPage] = useState(1);
+    const contestsPerPage = 7;
 
     const { refetch, data: contests = [] } = useQuery({
         queryKey: ["contests"],
@@ -89,8 +91,14 @@ const ManageContests = () => {
                     });
                     refetch();
                 }
-            })
+            });
     };
+
+    const indexOfLastContest = page * contestsPerPage;
+    const indexOfFirstContest = indexOfLastContest - contestsPerPage;
+    const currentContests = contests.slice(indexOfFirstContest, indexOfLastContest);
+
+    const totalPages = Math.ceil(contests.length / contestsPerPage);
 
     return (
         <div>
@@ -113,9 +121,9 @@ const ManageContests = () => {
                                 </tr>
                             </thead>
                             <tbody className="inter">
-                                {contests.map((contest, idx) => (
+                                {currentContests.map((contest, idx) => (
                                     <tr key={contest._id}>
-                                        <td>{idx + 1}</td>
+                                        <td>{indexOfFirstContest + idx + 1}</td>
                                         <td className="ubuntu">{contest.contestName}</td>
                                         <td>{contest.contestType}</td>
                                         <td>{contest.contestTask.slice(0, 20)}</td>
@@ -124,14 +132,12 @@ const ManageContests = () => {
                                                 <button
                                                     onClick={() => handleConfirm(contest._id)}
                                                     className="btn btn-ghost text-lg bg-orange-400 text-white">
-                                                        {
-                                                           contest.status == "pending" &&  <MdPendingActions />
-                                                        }
-                                                        {
-                                                           contest.status == "confirmed" &&  <GiConfirmed />
-                                                        }
-                                                        
-                                                    
+                                                    {
+                                                        contest.status === "pending" && <MdPendingActions />
+                                                    }
+                                                    {
+                                                        contest.status === "confirmed" && <GiConfirmed />
+                                                    }
                                                 </button>
                                             </div>
                                         </td>
@@ -157,6 +163,23 @@ const ManageContests = () => {
                                 ))}
                             </tbody>
                         </table>
+                    </div>
+                    <div className="flex justify-center mt-10">
+                        <button
+                            className="btn btn-outline btn-sm mx-2"
+                            onClick={() => setPage(page => Math.max(page - 1, 1))}
+                            disabled={page === 1}
+                        >
+                            <FaArrowLeft />
+                        </button>
+                        <span className="mx-2">Page {page} of {totalPages}</span>
+                        <button
+                            className="btn btn-outline btn-sm mx-2"
+                            onClick={() => setPage(page => Math.min(page + 1, totalPages))}
+                            disabled={page === totalPages}
+                        >
+                            <FaArrowRight />
+                        </button>
                     </div>
                 </div>
             </div>

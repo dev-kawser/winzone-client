@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 
 const AllContests = () => {
     const axiosPublic = useAxiosPublic();
     const [contests, setContests] = useState([]);
     const [activeTab, setActiveTab] = useState("all");
     const [searchParams] = useSearchParams();
+    const [page, setPage] = useState(1);
+    const [contestsPerPage] = useState(9);
 
     useEffect(() => {
         axiosPublic.get("/contests")
@@ -26,11 +29,19 @@ const AllContests = () => {
 
     const handleTabChange = (type) => {
         setActiveTab(type.toLowerCase().replace(/\s+/g, ''));
+        setPage(1); // Reset to first page on tab change
     };
 
     const filteredContests = activeTab === "all"
         ? contests.filter(contest => contest.status === "confirmed")
         : contests.filter(contest => contest.status === "confirmed" && contest.contestType.toLowerCase().replace(/\s+/g, '') === activeTab);
+
+    
+    const indexOfLastContest = page * contestsPerPage;
+    const indexOfFirstContest = indexOfLastContest - contestsPerPage;
+    const currentContests = filteredContests.slice(indexOfFirstContest, indexOfLastContest);
+
+    const totalPages = Math.ceil(filteredContests.length / contestsPerPage);
 
     return (
         <div className="container mx-auto mt-5">
@@ -54,7 +65,7 @@ const AllContests = () => {
             </div>
             <div className="divider"></div>
             <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {filteredContests.map(contest => (
+                {currentContests.map(contest => (
                     <div key={contest._id} className="card shadow-lg p-5 bg-white rounded-md">
                         <img src={contest.contestImage} alt={contest.contestName} className="w-full h-48 object-cover rounded-md" />
                         <h2 className="text-2xl font-bold mt-3 ubuntu">{contest.contestName}</h2>
@@ -69,6 +80,23 @@ const AllContests = () => {
                         </Link>
                     </div>
                 ))}
+            </div>
+            <div className="flex justify-center mt-10">
+                <button
+                    className="btn btn-outline btn-sm mx-2"
+                    onClick={() => setPage(page => Math.max(page - 1, 1))}
+                    disabled={page === 1}
+                >
+                    <FaArrowLeft />
+                </button>
+                <span className="mx-2">Page {page} of {totalPages}</span>
+                <button
+                    className="btn btn-outline btn-sm mx-2"
+                    onClick={() => setPage(page => Math.min(page + 1, totalPages))}
+                    disabled={page === totalPages}
+                >
+                    <FaArrowRight />
+                </button>
             </div>
         </div>
     );
