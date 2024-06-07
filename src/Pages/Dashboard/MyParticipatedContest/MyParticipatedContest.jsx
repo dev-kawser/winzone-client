@@ -100,7 +100,10 @@ const MyParticipatedContest = () => {
                                 placeholder="You must complete the task"
                                 className="border-2 p-2 border-gray-400"
                             />
-                            <button type="submit" className="btn btn-ghost mt-2 bg-[#d32f2f] text-white">
+                            <button
+                                disabled={contest.participate === true}
+                                type="submit"
+                                className="btn btn-ghost mt-2 bg-[#d32f2f] text-white">
                                 Participate
                             </button>
                         </form>
