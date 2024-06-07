@@ -1,63 +1,42 @@
-import { useLoaderData } from "react-router-dom";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useState } from "react";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { GiPodiumWinner } from "react-icons/gi";
-import Swal from "sweetalert2";
+import useAuth from "../../../Hooks/useAuth";
+import { Link } from "react-router-dom";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const ContestSubmittedPage = () => {
-    const contest = useLoaderData();
+    const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
-    const [selectedContest, setSelectedContest] = useState(null);
 
-    const { data: registerContests = [], refetch } = useQuery({
-        queryKey: ["register-contests", contest?._id],
+    const [page, setPage] = useState(1);
+    const contestsPerPage = 10;
+
+    const { data: registerContests = [] } = useQuery({
+        queryKey: ["contests", user?.email],
         queryFn: async () => {
-            const res = await axiosSecure.get("/register-contests");
+            const res = await axiosSecure.get(`/contests/email/${user?.email}`);
             return res.data;
         }
     });
 
-    const filteredContests = registerContests.filter(con => con.contestId === contest?._id);
+    const indexOfLastContest = page * contestsPerPage;
+    const indexOfFirstContest = indexOfLastContest - contestsPerPage;
+    const currentContests = registerContests.slice(indexOfFirstContest, indexOfLastContest);
 
-    const handleContestClick = (contest) => {
-        setSelectedContest(contest);
-    };
+    const totalPages = Math.ceil(registerContests.length / contestsPerPage);
 
-    const handleDeclareWin = async (submission) => {
-        try {
-            const res = await axiosSecure.put(`/register-contests/update/${submission._id}`, {
-                winner: true,
-                contestId: submission.contestId
-            });
-            console.log(res.data);
-            if (res.data.acknowledged) {
-                Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: "Winner declared successfully",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                refetch();
-            } else {
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Failed to declare the winner. Please try again.",
-                });
-            }
-        } catch (error) {
-            console.error("Error declaring winner:", error);
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Something went wrong!",
-            });
+    const handleNextPage = () => {
+        if (page < totalPages) {
+            setPage(page + 1);
         }
     };
 
-    const winnerDeclared = filteredContests?.some(submission => submission.winner);
+    const handlePreviousPage = () => {
+        if (page > 1) {
+            setPage(page - 1);
+        }
+    };
 
     return (
         <div>
@@ -69,71 +48,44 @@ const ContestSubmittedPage = () => {
                     <table className="table table-zebra">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th>Contest Title</th>
                                 <th>Prize</th>
                             </tr>
                         </thead>
                         <tbody className="inter">
-                            <tr>
-                                <td>
-                                    <button
-                                        onClick={() => handleContestClick(contest)}
-                                        className="btn btn-link">
-                                        {contest?.contestName}
-                                    </button>
-                                </td>
-                                <td>{contest?.contestPrize}</td>
-                            </tr>
+                            {currentContests.map((contest, idx) => (
+                                <tr key={contest._id}>
+                                    <td>{indexOfFirstContest + idx + 1}</td>
+                                    <td>
+                                        <Link to={`/dashboard/participate/${contest._id}`} className="btn-link">
+                                            {contest?.contestName}
+                                        </Link>
+                                    </td>
+                                    <td>{contest?.contestPrize}</td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
-            </div>
-
-            {selectedContest && (
-                <div className="mt-10 mx-5">
-                    <h2 className="text-2xl font-bold ubuntu">Submissions for {selectedContest.contestName}</h2>
-                    <div className="overflow-x-auto mt-5">
-                        <table className="table table-zebra">
-                            <thead>
-                                <tr>
-                                    <th>Participant Name</th>
-                                    <th>Email</th>
-                                    <th>Submitted Task</th>
-                                    <th>Declare Win</th>
-                                </tr>
-                            </thead>
-                            <tbody className="inter">
-                                {filteredContests?.map((submission) => (
-                                    <tr key={submission._id}>
-                                        <td>{submission.name}</td>
-                                        <td>{submission.email}</td>
-                                        <td>
-                                            {submission.submittedTask?.length > 40
-                                                ? submission.submittedTask.slice(0, 50) + "..."
-                                                : submission.submittedTask}
-                                        </td>
-                                        <td>
-                                            {!submission.winner && !winnerDeclared && (
-                                                <button
-                                                    onClick={() => handleDeclareWin(submission)}
-                                                    className="btn btn-ghost text-lg bg-blue-500 text-white">
-                                                    <GiPodiumWinner />
-                                                </button>
-                                            )}
-                                            {submission.winner && (
-                                                <span className="text-green-500 font-semibold">Winner</span>
-                                            )}
-                                            {!submission.winner && winnerDeclared && (
-                                                <span className="text-red-500 font-semibold">Unsuccess</span>
-                                            )}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                <div className="flex justify-center mt-4">
+                    <button
+                        onClick={handlePreviousPage}
+                        disabled={page === 1}
+                        className="btn btn-outline btn-sm mx-2"
+                    >
+                        <FaArrowLeft />
+                    </button>
+                    <span className="text-center">{`Page ${page} of ${totalPages}`}</span>
+                    <button
+                        onClick={handleNextPage}
+                        disabled={page === totalPages}
+                        className="btn btn-outline btn-sm mx-2"
+                    >
+                        <FaArrowRight/>
+                    </button>
                 </div>
-            )}
+            </div>
         </div>
     );
 };

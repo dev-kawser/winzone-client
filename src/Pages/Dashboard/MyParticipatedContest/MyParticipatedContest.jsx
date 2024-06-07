@@ -57,7 +57,6 @@ const MyParticipatedContest = () => {
         setCurrentPage(newPage);
     };
 
-    // Pagination logic
     const sortedContests = sortContests();
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;

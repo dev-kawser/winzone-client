@@ -11,6 +11,7 @@ import ManageUsers from "../Pages/Dashboard/ManageUsers/ManageUsers";
 import ManageContests from "../Pages/Dashboard/ManageContests/ManageContests";
 import MyCreatedContest from "../Pages/Dashboard/MyCreatedContest/MyCreatedContest";
 import ContestSubmittedPage from "../Pages/Dashboard/ContestSubmittedPage/ContestSubmittedPage";
+import Participate from "../Pages/Dashboard/ContestSubmittedPage/Participate";
 import ContestUpdate from "../Pages/Dashboard/ContestUpdate/ContestUpdate";
 import AllContests from "../Pages/AllContests/AllContests";
 import ContestDetails from "../Pages/ContestDetails/ContestDetails";
@@ -129,17 +130,17 @@ const router = createBrowserRouter([
                 loader: ({ params }) => fetch(`http://localhost:5000/contests/${params.id}`)
             },
             {
-                path: "contest-submitted-page/:id",
-                element: <CreatorRoutes>
-                    <ContestSubmittedPage></ContestSubmittedPage>
-                </CreatorRoutes>,
-                loader: ({ params }) => fetch(`http://localhost:5000/contests/${params.id}`)
-            },
-            {
                 path: "contest-submitted-page",
                 element: <CreatorRoutes>
                     <ContestSubmittedPage></ContestSubmittedPage>
-                </CreatorRoutes>
+                </CreatorRoutes>,
+            },
+            {
+                path: "participate/:id",
+                element: <CreatorRoutes>
+                    <Participate></Participate>
+                </CreatorRoutes>,
+                loader: ({ params }) => fetch(`http://localhost:5000/contests/${params.id}`)
             },
         ]
     }

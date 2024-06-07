@@ -19,7 +19,7 @@ const AllContests = () => {
             .catch(err => console.error(err));
     }, [axiosPublic]);
 
-    // show tab with banner value
+    
     useEffect(() => {
         const search = searchParams.get('search');
         if (search) {
@@ -29,7 +29,7 @@ const AllContests = () => {
 
     const handleTabChange = (type) => {
         setActiveTab(type.toLowerCase().replace(/\s+/g, ''));
-        setPage(1); // Reset to first page on tab change
+        setPage(1);
     };
 
     const filteredContests = activeTab === "all"

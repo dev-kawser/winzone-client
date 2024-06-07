@@ -14,7 +14,7 @@ const MyCreatedContest = () => {
 
     const [comment, setComment] = useState([]);
     const [page, setPage] = useState(1);
-    const contestsPerPage = 7; 
+    const contestsPerPage = 7;
 
     const { refetch, data: contests = [] } = useQuery({
         queryKey: ["contests", user?.email],
@@ -55,7 +55,7 @@ const MyCreatedContest = () => {
         document.getElementById('comment_modal').showModal();
     };
 
-    
+
     const indexOfLastContest = page * contestsPerPage;
     const indexOfFirstContest = indexOfLastContest - contestsPerPage;
     const currentContests = contests.slice(indexOfFirstContest, indexOfLastContest);
@@ -118,7 +118,7 @@ const MyCreatedContest = () => {
                                         </button>
                                     </td>
                                     <td>
-                                        <Link to={`/dashboard/contest-submitted-page/${contest._id}`}>
+                                        <Link to="/dashboard/contest-submitted-page">
                                             <button
                                                 className="btn btn-ghost lg:text-base bg-green-600 text-white">
                                                 See Submissions
