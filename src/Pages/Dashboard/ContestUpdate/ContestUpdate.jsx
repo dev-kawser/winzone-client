@@ -5,6 +5,7 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
 import ReactDatePicker from "react-datepicker";
 import Swal from "sweetalert2";
+import useAuth from "../../../Hooks/useAuth";
 
 
 const ContestUpdate = () => {
@@ -13,6 +14,8 @@ const ContestUpdate = () => {
     const { contestName, contestPrice, contestImage, contestTask, contestType, contestDescription, _id } = contest
 
     const [startDate, setStartDate] = useState(null);
+
+    const { user } = useAuth()
 
     const axiosSecure = useAxiosSecure();
 
@@ -24,6 +27,8 @@ const ContestUpdate = () => {
 
     const onSubmit = async (data) => {
 
+        const name = user.displayName;
+        const image = user.photoURL;
         const contestName = data.contestName
         const contestPrice = data.contestPrice
         const contestImage = data.contestImage
@@ -33,7 +38,8 @@ const ContestUpdate = () => {
         const contestDeadline = startDate.toISOString().split('T')[0];
 
         const UpdateContestInfo = {
-
+            name: name,
+            image: image,
             contestName: contestName,
             contestPrice: contestPrice,
             contestImage: contestImage,

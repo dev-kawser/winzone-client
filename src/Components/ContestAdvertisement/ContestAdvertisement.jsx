@@ -37,8 +37,8 @@ const ContestAdvertisement = () => {
     }, [contests]);
 
     return (
-        <section className="bg-gray-100 py-10 mt-20">
-            <div className="container mx-auto">
+        <section className="bg-gray-100 container mx-auto py-10 mt-20">
+            <div className="px-10">
                 <div className="bg-white shadow-md rounded-lg p-8">
                     <div className="flex flex-col lg:flex-row items-center">
                         <div className="lg:w-1/2">

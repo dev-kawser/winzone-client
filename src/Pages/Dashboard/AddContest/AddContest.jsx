@@ -26,6 +26,8 @@ const AddContest = () => {
     const onSubmit = data => {
 
         const email = user.email;
+        const name = user.displayName;
+        const image = user.photoURL;
         const status = "pending";
         const contestName = data.contestName;
         const contestPrice = data.contestPrice;
@@ -40,6 +42,8 @@ const AddContest = () => {
         const contestInfo = {
 
             email: email,
+            name: name,
+            image: image,
             status: status,
             contestName: contestName,
             contestPrice: contestPrice,

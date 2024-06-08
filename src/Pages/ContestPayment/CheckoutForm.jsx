@@ -80,7 +80,7 @@ const CheckoutForm = ({ contest }) => {
 
                     Swal.fire({
                         title: "Payment Complete",
-                        text: `Transaction Id ${paymentIntent.id}`,
+                        text: "Now can confirm your participation form my participate page ",
                         icon: "success"
                     });
                 }
