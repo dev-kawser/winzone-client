@@ -17,6 +17,8 @@ const Participate = () => {
     });
 
     const filteredContests = registerContests.filter(con => con.contestId === contest?._id && con.participate === true);
+
+    
     const handleDeclareWin = async (submission) => {
 
         const res = await axiosSecure.put(`/register-contests/update/${submission._id}`, {
