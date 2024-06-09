@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import { Helmet } from "react-helmet";
 
 const AllContests = () => {
     const axiosPublic = useAxiosPublic();
@@ -19,7 +20,7 @@ const AllContests = () => {
             .catch(err => console.error(err));
     }, [axiosPublic]);
 
-    
+
     useEffect(() => {
         const search = searchParams.get('search');
         if (search) {
@@ -36,7 +37,7 @@ const AllContests = () => {
         ? contests.filter(contest => contest.status === "confirmed")
         : contests.filter(contest => contest.status === "confirmed" && contest.contestType.toLowerCase().replace(/\s+/g, '') === activeTab);
 
-    
+
     const indexOfLastContest = page * contestsPerPage;
     const indexOfFirstContest = indexOfLastContest - contestsPerPage;
     const currentContests = filteredContests.slice(indexOfFirstContest, indexOfLastContest);
@@ -45,6 +46,11 @@ const AllContests = () => {
 
     return (
         <div className="container mx-auto mt-5">
+
+            <Helmet>
+                <title>WinZone | All Contests</title>
+            </Helmet>
+            
             <div className="hero min-h-[100px] bg-[#d32f2f]">
                 <div className="hero-content flex items-center justify-center">
                     <div>

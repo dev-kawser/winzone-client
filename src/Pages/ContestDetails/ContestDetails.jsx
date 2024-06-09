@@ -2,6 +2,7 @@ import { Link, useLoaderData } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { FaArrowDownLong } from "react-icons/fa6";
 import useCurrentUser from "../../Hooks/useCurrentUser";
+import { Helmet } from "react-helmet";
 
 const ContestDetails = () => {
 
@@ -38,6 +39,11 @@ const ContestDetails = () => {
 
     return (
         <div className="container mx-auto mt-10">
+            
+            <Helmet>
+                <title>WinZone | {contest.contestName}</title>
+            </Helmet>
+            
             <div className="hero min-h-[100px] bg-[#d32f2f]">
                 <div className="hero-content flex items-center justify-center">
                     <div>

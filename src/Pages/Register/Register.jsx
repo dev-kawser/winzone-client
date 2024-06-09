@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -7,17 +7,36 @@ import useAuth from "../../Hooks/useAuth";
 import { updateProfile } from "firebase/auth";
 import { Helmet } from "react-helmet";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
-
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 
 
 const Register = () => {
     const { registerUser, googleUser } = useAuth()
     const [error, setError] = useState("")
     const [showPassword, setShowPassword] = useState(false)
+    const [disable, setDisable] = useState(true);
     const navigate = useNavigate();
     const location = useLocation();
 
     const axiosPublic = useAxiosPublic()
+
+    useEffect(() => {
+        loadCaptchaEnginge(6, 'white', 'black', 'numbers');
+    }, [])
+
+    const handleValidateCaptcha = (e) => {
+
+        const user_captcha_value = e.target.value;
+
+        if (validateCaptcha(user_captcha_value)) {
+            setDisable(false)
+        }
+
+        else {
+            setDisable(true)
+        }
+
+    }
 
 
     const {
@@ -165,7 +184,12 @@ const Register = () => {
                                     {errors.userName && <small className="text-red-500 font-medium mt-1">This field is required</small>}
                                 </div>
                                 <div>
-                                    <button type="submit" className="w-full bg-[#d32f2f] text-white p-2 rounded-md hover:bg-blue-500 focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Register</button>
+                                    <label htmlFor="captcha" className="block text-sm font-medium text-gray-700"><LoadCanvasTemplate /></label>
+                                    <input onBlur={handleValidateCaptcha} placeholder="After complete captcha click anywhere to proceed" type="text" id="captcha" name="captcha" className="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300" />
+
+                                </div>
+                                <div>
+                                    <button disabled={disable} type="submit" className="w-full btn bg-[#d32f2f] text-white p-2 rounded-md hover:bg-blue-500 focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300">Register</button>
                                 </div>
                             </form>
                             <div className="mt-4 text-sm text-gray-600 text-center">

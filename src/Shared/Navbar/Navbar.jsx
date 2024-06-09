@@ -84,7 +84,7 @@ const Navbar = () => {
                                 <div className='border'></div>
                                 <div className='flex gap-2 items-center justify-center'>
                                     <CgLogIn className='text-xl' />
-                                    <Link to='/register' className="hover:underline ubuntu">Register</Link>
+                                    <a className="hover:underline ubuntu">Register</a>
                                 </div>
                             </div>
                         </div>

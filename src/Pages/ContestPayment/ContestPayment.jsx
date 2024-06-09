@@ -2,6 +2,7 @@ import { useLoaderData } from "react-router-dom";
 import CheckoutForm from "./CheckoutForm";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { Helmet } from "react-helmet";
 
 const ContestPayment = () => {
     const contest = useLoaderData();
@@ -14,6 +15,11 @@ const ContestPayment = () => {
 
     return (
         <div className="container mx-auto mt-10">
+            
+            <Helmet>
+                <title>WinZone | Payment</title>
+            </Helmet>
+            
             <div className="bg-white p-8 rounded-lg shadow-lg">
                 <h2 className="text-2xl font-bold mb-4 ubuntu">Payment for <span className="text-3xl font-bold text-[#d32f2f]">{contest.contestName}</span></h2>
                 <img src={contest.contestImage} alt={contest.contestName} className="w-full h-48 object-cover rounded-md mb-4" />

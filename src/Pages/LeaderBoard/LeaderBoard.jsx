@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import spinner from "../../assets/spinner.json";
 import Lottie from 'lottie-react';
+import { Helmet } from 'react-helmet';
 
 const LeaderBoard = () => {
     const axiosPublic = useAxiosPublic();
@@ -20,6 +21,11 @@ const LeaderBoard = () => {
 
     return (
         <div>
+            
+            <Helmet>
+                <title>WinZone | Leaderboard</title>
+            </Helmet>
+            
             <div className="w-full bg-gradient-to-r from-[#d32f2f] to-[#FF5F6D] lg:py-8 py-4">
                 <h1 className="text-center text-white text-lg lg:text-3xl font-extrabold drop-shadow-lg">
                     Leaderboard
