@@ -65,14 +65,14 @@ const router = createBrowserRouter([
                 element: <PrivateRoute>
                     <ContestDetails></ContestDetails>
                 </PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/contests/${params.id}`)
+                loader: ({ params }) => fetch(`https://photo-contes-server.vercel.app/contests/${params.id}`)
             },
             {
                 path: "/contest-payment/:id",
                 element: <PrivateRoute>
                     <ContestPayment></ContestPayment>
                 </PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5000/contests/${params.id}`)
+                loader: ({ params }) => fetch(`https://photo-contes-server.vercel.app/contests/${params.id}`)
             },
         ]
     },
@@ -141,7 +141,7 @@ const router = createBrowserRouter([
                 element: <CreatorRoutes>
                     <ContestUpdate></ContestUpdate>
                 </CreatorRoutes>,
-                loader: ({ params }) => fetch(`http://localhost:5000/contests/${params.id}`)
+                loader: ({ params }) => fetch(`https://photo-contes-server.vercel.app/contests/${params.id}`)
             },
             {
                 path: "contest-submitted-page",
@@ -154,7 +154,7 @@ const router = createBrowserRouter([
                 element: <CreatorRoutes>
                     <Participate></Participate>
                 </CreatorRoutes>,
-                loader: ({ params }) => fetch(`http://localhost:5000/contests/${params.id}`)
+                loader: ({ params }) => fetch(`https://photo-contes-server.vercel.app/contests/${params.id}`)
             },
         ]
     }
