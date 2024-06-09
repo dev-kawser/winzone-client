@@ -78,7 +78,7 @@ const Login = () => {
 
             <div className="flex justify-center items-center">
                 <div className="hidden lg:block">
-                    <img src="https://i.ibb.co/TghRQpG/gidon-wessner-SZt-LK-W7v-Ko-unsplash.jpg" alt="Placeholder Image" className="size-[500px] rounded object-cover" />
+                    <img src="https://i.ibb.co/Cv2Qkqs/member-log-membership-username-password-concept.jpg" alt="Placeholder Image" className="size-[500px] rounded object-cover" />
                 </div>
                 <div className="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-1/2">
                     <h1 className="text-2xl font-semibold mb-4">Login</h1>

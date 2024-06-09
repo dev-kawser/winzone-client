@@ -19,10 +19,10 @@ const Navbar = () => {
             <NavLink className={({ isActive }) => isActive ? 'text-[#d32f2f]' : 'hover:scale-105'} to='/all-contests' > All
                 contests</NavLink> <span className="hidden lg:block mt-[2px] h-[3px] w-[0px] rounded-full bg-[#d32f2f]  transition-all duration-300 group-hover:w-full"></span>
         </li>
-        {/* <li className="group flex  cursor-pointer flex-col">
-            <NavLink className={({ isActive }) => isActive ? 'text-[#d32f2f] font-bold ' : 'font-semibold hover:scale-105'} to='/my-queries' > My Queries </NavLink> <span className="hidden lg:block mt-[2px] h-[3px] w-[0px] rounded-full bg-[#d32f2f] transition-all duration-300 group-hover:w-full"></span>
-        </li>
         <li className="group flex  cursor-pointer flex-col">
+            <NavLink className={({ isActive }) => isActive ? 'text-[#d32f2f] ' : ' hover:scale-105'} to='/leaderBoard' > Leaderboard </NavLink> <span className="hidden lg:block mt-[2px] h-[3px] w-[0px] rounded-full bg-[#d32f2f] transition-all duration-300 group-hover:w-full"></span>
+        </li>
+        {/* <li className="group flex  cursor-pointer flex-col">
             <NavLink className={({ isActive }) => isActive ? 'text-[#d32f2f] font-bold ' : 'font-semibold hover:scale-105'} to='/allReview' > Reviews </NavLink> <span className="hidden lg:block mt-[2px] h-[3px] w-[0px] rounded-full bg-[#d32f2f] transition-all duration-300 group-hover:w-full"></span>
         </li> */}
 
@@ -95,7 +95,7 @@ const Navbar = () => {
                             </ul>
                         </div>
                         <div className='flex gap-2 items-center justify-center'>
-                            <img className='lg:size-12 size-5 rounded-full p-1 border-2 border-[#d32f2f]' src="https://i.ibb.co/7XhJX5x/w-removebg-preview.png" alt="" />
+                            <img className='lg:size-12 size-5 rounded-full p-1 border-2 border-[#d32f2f]' src="https://i.ibb.co/Yjm8Wx5/golden-trophy-with-falling-golden-confetti.jpg" alt="" />
                             <Link to='/' className="font-bold ubuntu text-lg lg:text-[27px] text-[#d32f2f]">WinZone</Link>
                         </div>
                     </div>

@@ -1,22 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation, Autoplay } from 'swiper/modules';
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const BestCreator = () => {
     const [popularContests, setPopularContests] = useState([]);
 
-    const axiosSecure = useAxiosSecure();
+    const axiosPublic = useAxiosPublic()
 
     const { data: contests = [] } = useQuery({
         queryKey: ["contests"],
         queryFn: async () => {
-            const res = await axiosSecure.get("/contests");
+            const res = await axiosPublic.get("/contests");
             return res.data;
         }
     });
@@ -24,14 +24,14 @@ const BestCreator = () => {
     useEffect(() => {
         if (contests.length > 0) {
             const sortedContests = contests.sort((a, b) => b.participantsCount - a.participantsCount);
-            setPopularContests(sortedContests.slice(0, 1));
+            setPopularContests(sortedContests.slice(0, 5));
         }
     }, [contests]);
 
     return (
         <div className="mt-20 container mx-auto bg-gray-100 p-5">
             <div className="w-full bg-[#d32f2f] lg:py-8 py-4">
-                <h1 className="text-center ubuntu text-white text-lg lg:text-4xl font-bold">Our Best Creator</h1>
+                <h1 className="text-center ubuntu text-white text-lg lg:text-4xl font-bold">Our Best Creators</h1>
             </div>
             <div className="mt-10">
                 <Swiper
