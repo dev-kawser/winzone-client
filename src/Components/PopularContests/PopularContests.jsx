@@ -35,7 +35,7 @@ const PopularContests = () => {
                             alt={contest.contestName}
                             className="w-full h-48 object-cover rounded-lg mb-4"
                         />
-                        <h2 className="text-lg font-bold mb-2">{contest.contestName}</h2>
+                        <h2 className="text-lg text-gray-600 font-bold mb-2">{contest.contestName}</h2>
                         <p className="text-gray-600 mb-4">
                             {contest.contestDescription.slice(0, 100)}...
                         </p>

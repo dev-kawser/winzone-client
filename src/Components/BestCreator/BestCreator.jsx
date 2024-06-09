@@ -29,7 +29,7 @@ const BestCreator = () => {
     }, [contests]);
 
     return (
-        <div className="mt-20 container mx-auto bg-gray-100 p-5">
+        <div className="mt-20 container rounded-lg mx-auto bg-gray-100 p-5">
             <div className="w-full bg-[#d32f2f] lg:py-8 py-4">
                 <h1 className="text-center ubuntu text-white text-lg lg:text-4xl font-bold">Our Best Creators</h1>
             </div>
@@ -47,10 +47,10 @@ const BestCreator = () => {
                         <SwiperSlide key={contest._id}>
                             <div className="inter px-20 text-center flex flex-col gap-3 justify-center items-center">
                                 <img src={contest.image} alt="" className="rounded-xl" />
-                                <p>
+                                <p className="text-gray-600">
                                     Contest: {contest.contestName}
                                 </p>
-                                <p>
+                                <p className="text-gray-600">
                                     {contest.contestDescription}
                                 </p>
                                 <h2 className="text-[#CD9003] text-2xl">

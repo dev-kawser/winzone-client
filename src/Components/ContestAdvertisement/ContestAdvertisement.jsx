@@ -38,12 +38,12 @@ const ContestAdvertisement = () => {
     }, [contests]);
 
     return (
-        <section className="bg-gray-100 container mx-auto py-10 mt-20">
+        <section className="bg-gray-100 rounded-lg container mx-auto py-10 mt-20">
             <div className="px-10">
                 <div className="bg-white shadow-md rounded-lg p-8">
                     <div className="flex flex-col lg:flex-row items-center">
                         <div className="lg:w-1/2">
-                            <h2 className="text-4xl font-bold ubuntu text-center lg:text-left mb-4">Join the Contest and Win Amazing Prizes!</h2>
+                            <h2 className="text-4xl text-gray-600 font-bold ubuntu text-center lg:text-left mb-4">Join the Contest and Win Amazing Prizes!</h2>
                             <p className="text-gray-700 inter text-center lg:text-left mb-4">
                                 Participate in our exciting contests and stand a chance to win amazing prizes. Show your skills and compete with others to become the ultimate winner.
                             </p>
@@ -51,11 +51,11 @@ const ContestAdvertisement = () => {
                                 <FaTrophy className="text-yellow-500 text-6xl" />
                             </div>
                             <div className="text-center lg:text-left mt-4">
-                                <h3 className="text-xl font-semibold mb-2">Total Participants</h3>
+                                <h3 className="text-xl text-gray-600 font-semibold mb-2">Total Participants</h3>
                                 <p className="text-gray-700">{registerContests.length || "Loading..."}</p>
                             </div>
                             <div className="text-center lg:text-left mt-4">
-                                <h3 className="text-xl font-semibold mb-2">Total Winners</h3>
+                                <h3 className="text-xl text-gray-600 font-semibold mb-2">Total Winners</h3>
                                 <p className="text-gray-700">{contestWinner.length || "Loading..."}</p>
                             </div>
                             <div>

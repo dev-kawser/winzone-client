@@ -23,6 +23,7 @@ import MyParticipatedContest from "../Pages/Dashboard/MyParticipatedContest/MyPa
 import MyWinningContests from "../Pages/Dashboard/MyWinningContests/MyWinningContests";
 import MyProfile from "../Pages/Dashboard/MyProfile/MyProfile";
 import LeaderBoard from "../Pages/LeaderBoard/LeaderBoard";
+import ParticipationsProgress from "../Pages/ParticipationsProgress/ParticipationsProgress";
 
 
 const router = createBrowserRouter([
@@ -49,7 +50,15 @@ const router = createBrowserRouter([
             },
             {
                 path: '/leaderBoard',
-                element: <LeaderBoard></LeaderBoard>
+                element: <PrivateRoute>
+                    <LeaderBoard></LeaderBoard>
+                </PrivateRoute>
+            },
+            {
+                path: '/participation-progress',
+                element: <PrivateRoute>
+                    <ParticipationsProgress></ParticipationsProgress>
+                </PrivateRoute>
             },
             {
                 path: "/contest-details/:id",
